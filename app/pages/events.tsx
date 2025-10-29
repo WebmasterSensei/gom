@@ -1,0 +1,295 @@
+import { useState } from "react";
+import { BlurFadeText } from "./partials/blurfade";
+
+export default function Gallery() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const images = [
+    {
+      id: 1,
+      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+      title: "Mountain Vista",
+      category: "Nature",
+      description:
+        "Breathtaking mountain peaks touching the clouds, showcasing nature's grandeur in its purest form.",
+      location: "Swiss Alps",
+      photographer: "Alex Mountain"
+    },
+    {
+      id: 2,
+      url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop",
+      title: "Forest Path",
+      category: "Nature",
+      description:
+        "A serene pathway through ancient woods, where sunlight filters through the canopy creating magical moments.",
+      location: "Pacific Northwest",
+      photographer: "Sarah Woods"
+    },
+    {
+      id: 3,
+      url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop",
+      title: "Sunset Lake",
+      category: "Nature",
+      description:
+        "Golden hour reflections dancing on still waters, painting the sky with vibrant hues of orange and pink.",
+      location: "Lake District",
+      photographer: "Mike Waters"
+    },
+    {
+      id: 4,
+      url: "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=800&h=600&fit=crop",
+      title: "Desert Dunes",
+      category: "Landscape",
+      description:
+        "Endless rolling sand dunes sculpted by wind, creating mesmerizing patterns under the desert sun.",
+      location: "Sahara Desert",
+      photographer: "Emma Sand"
+    },
+    {
+      id: 5,
+      url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop",
+      title: "Ocean Waves",
+      category: "Seascape",
+      description:
+        "Powerful waves crashing against the shore, the eternal dance between sea and land captured in time.",
+      location: "California Coast",
+      photographer: "David Ocean"
+    },
+    {
+      id: 6,
+      url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
+      title: "Foggy Valley",
+      category: "Nature",
+      description:
+        "Mysterious fog rolling through the valley, creating an ethereal atmosphere that captivates the soul.",
+      location: "Scottish Highlands",
+      photographer: "Lisa Mist"
+    }
+  ];
+
+  const nextImage = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const goToImage = (index: any) => {
+    setCurrentIndex(index);
+  };
+
+  const currentImage = images[currentIndex];
+
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4 md:p-8" id="events">
+      <div className="max-w-7xl w-full">
+        <div className="text-center mb-8">
+          <h1 className="mb-6 text-center animate-fade-in">
+            <BlurFadeText title="Events" subtitle="Explore our events" />
+          </h1>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left Column - Stacked Images */}
+          <div className="relative h-[400px] md:h-[500px] flex items-center justify-center order-2 lg:order-1">
+            {images.map((image, index) => {
+              const offset = index - currentIndex;
+              const absOffset = Math.abs(offset);
+
+              if (absOffset > 2) return null;
+
+              let zIndex = images.length - absOffset;
+              let scale = 1 - absOffset * 0.08;
+              let translateX = offset * 30;
+              let translateY = absOffset * 15;
+              let opacity = absOffset === 0 ? 1 : 0.4;
+              let rotate = offset * 2;
+
+              return (
+                <div
+                  key={image.id}
+                  className="absolute w-full max-w-md transition-all duration-700 ease-out cursor-pointer"
+                  style={{
+                    zIndex,
+                    transform: `scale(${scale}) translate(${translateX}px, ${translateY}px) rotate(${rotate}deg)`,
+                    opacity
+                  }}
+                  onClick={
+                    offset !== 0
+                      ? offset > 0
+                        ? nextImage
+                        : prevImage
+                      : undefined
+                  }
+                >
+                  <div className="bg-white rounded-4xl overflow-hidden shadow-3xl">
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img
+                        src={image.url}
+                        alt={image.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevImage}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-50 bg-slate-800/90 hover:bg-white text-white text-slate-800 rounded-full p-3 shadow-xl transition-all hover:scale-110"
+              aria-label="Previous image"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+
+            <button
+              onClick={nextImage}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-50 text-white bg-slate-800/90 hover:bg-white text-slate-800 rounded-full p-3 shadow-xl transition-all hover:scale-110"
+              aria-label="Next image"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Right Column - Description */}
+          <div className="order-1 lg:order-2 space-y-6">
+            <div key={currentIndex} className="animate-fadeIn">
+              <span className="inline-block px-4 py-2 bg-purple-500/20 backdrop-blur-sm text-purple-300 rounded-full text-sm font-semibold mb-4 border border-purple-400/30">
+                {currentImage.category}
+              </span>
+
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {currentImage.title}
+              </h2>
+
+              <p className="text-slate-300 text-lg leading-relaxed mb-6">
+                {currentImage.description}
+              </p>
+
+              <div className="space-y-3 text-slate-400">
+                <div className="flex items-center gap-3">
+                  <svg
+                    className="w-5 h-5 text-purple-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <span>{currentImage.location}</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <svg
+                    className="w-5 h-5 text-purple-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <span>by {currentImage.photographer}</span>
+                </div>
+              </div>
+
+              <div className="mt-8 flex items-center gap-4">
+                <span className="text-slate-400 text-sm font-medium">
+                  {currentIndex + 1} / {images.length}
+                </span>
+                <div className="flex-1 h-1 bg-slate-700 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-700"
+                    style={{
+                      width: `${((currentIndex + 1) / images.length) * 100}%`
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Dots Navigation */}
+            <div className="flex gap-2 pt-4">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToImage(index)}
+                  className={`transition-all duration-300 rounded-full ${
+                    index === currentIndex
+                      ? "w-10 h-3 bg-purple-500"
+                      : "w-3 h-3 bg-slate-600 hover:bg-slate-500"
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
+    </div>
+  );
+}
