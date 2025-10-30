@@ -44,7 +44,10 @@ export default function Hero() {
   };
   return (
     <>
-      <div className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-32 overflow-hidden" id="hero">
+      <div
+        className="relative h-screen pt-24 pb-16 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-32 overflow-hidden"
+        id="hero"
+      >
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -58,11 +61,11 @@ export default function Hero() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             {/* Badge */}
-            <div className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-950 px-4 py-2 rounded-full mb-8">
-              <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+            <div className="inline-flex items-center space-x-2  dark:bg-blue-950 px-4 py-2 rounded-full mb-8">
+              {/* <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
               <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
                 New features available now
-              </span>
+              </span> */}
             </div>
 
             {/* Headline */}
@@ -81,22 +84,24 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <button className="group flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-orange-700 to-yellow-600 text-white rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <span className="font-semibold">Events</span>
-                <ArrowRight
-                  size={20}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </button>
-              <button className="px-8 py-4 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white border-2 border-zinc-200 dark:border-zinc-800 rounded-full hover:border-blue-600 dark:hover:border-blue-400 transition-all duration-300">
-                About Us
-              </button>
+              <a href="#events">
+                <button className="group flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-orange-700 to-yellow-600 text-white rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                  <span className="font-semibold">Events</span>
+                  <ArrowRight
+                    size={20}
+                    className="group-hover:translate-x-1 transition-transform"
+                  />
+                </button>
+              </a>
+              <a href="#aboutus">
+                <button className="px-8 py-4 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white border-2 border-zinc-200 dark:border-zinc-800 rounded-full hover:border-blue-600 dark:hover:border-blue-400 transition-all duration-300">
+                  About Us
+                </button>
+              </a>
             </div>
 
             {/* Stats */}
-            <div className="mx-auto pt-8  border-zinc-200 dark:border-zinc-800">
-             
-            </div>
+            <div className="mx-auto pt-8  border-zinc-200 dark:border-zinc-800"></div>
           </div>
         </div>
 

@@ -10,6 +10,8 @@ import Events from "./pages/events";
 import Pastors from "./pages/pastors";
 import ContactUs from "./pages/contacus";
 import Footer from "./pages/footer";
+import UpcomingEvents from "./pages/upcommingevents";
+import Verses from "./pages/verse";
 
 export default function Home() {
 
@@ -21,7 +23,9 @@ export default function Home() {
      
       {/* Hero Section */}
       <Hero/>
+      <Verses />
       <Events/>
+      <UpcomingEvents />
       <AboutUs/>
       <Pastors />
       <ContactUs />

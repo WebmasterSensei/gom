@@ -136,21 +136,17 @@ export default function AboutUs() {
           </div>
         </div>
 
-        
-
         {/* CTA Section */}
-        <div className="text-white py-16">
+        <div className="text-white p-20">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Work Together?
+              Join Us in a Powerful Time of Worship ✨
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Let's create something amazing together. Get in touch with our
-              team today.
+              Let’s lift our voices, open our hearts, and experience God’s
+              presence together. Every gathering is a new chance to grow in
+              faith and purpose. 🙏
             </p>
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-colors duration-300 shadow-lg">
-              Contact Us
-            </button>
           </div>
         </div>
       </div>

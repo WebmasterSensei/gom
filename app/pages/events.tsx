@@ -1,105 +1,63 @@
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
 import { BlurFadeText } from "./partials/blurfade";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function Gallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [events, setEvents] = useState<any[]>([]);
 
-  const images = [
-    {
-      id: 1,
-      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
-      title: "Mountain Vista",
-      category: "Nature",
-      description:
-        "Breathtaking mountain peaks touching the clouds, showcasing nature's grandeur in its purest form.",
-      location: "Swiss Alps",
-      photographer: "Alex Mountain"
-    },
-    {
-      id: 2,
-      url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop",
-      title: "Forest Path",
-      category: "Nature",
-      description:
-        "A serene pathway through ancient woods, where sunlight filters through the canopy creating magical moments.",
-      location: "Pacific Northwest",
-      photographer: "Sarah Woods"
-    },
-    {
-      id: 3,
-      url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop",
-      title: "Sunset Lake",
-      category: "Nature",
-      description:
-        "Golden hour reflections dancing on still waters, painting the sky with vibrant hues of orange and pink.",
-      location: "Lake District",
-      photographer: "Mike Waters"
-    },
-    {
-      id: 4,
-      url: "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=800&h=600&fit=crop",
-      title: "Desert Dunes",
-      category: "Landscape",
-      description:
-        "Endless rolling sand dunes sculpted by wind, creating mesmerizing patterns under the desert sun.",
-      location: "Sahara Desert",
-      photographer: "Emma Sand"
-    },
-    {
-      id: 5,
-      url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop",
-      title: "Ocean Waves",
-      category: "Seascape",
-      description:
-        "Powerful waves crashing against the shore, the eternal dance between sea and land captured in time.",
-      location: "California Coast",
-      photographer: "David Ocean"
-    },
-    {
-      id: 6,
-      url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
-      title: "Foggy Valley",
-      category: "Nature",
-      description:
-        "Mysterious fog rolling through the valley, creating an ethereal atmosphere that captivates the soul.",
-      location: "Scottish Highlands",
-      photographer: "Lisa Mist"
-    }
-  ];
+  const fetchEvents = async () => {
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .lt("date", new Date().toISOString())
+      .order("date", { ascending: true });
+    if (error) console.error("Error fetching users:", error);
+    else setEvents(data || []);
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setCurrentIndex((prev) => (prev + 1) % events.length);
   };
 
   const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentIndex((prev) => (prev - 1 + events.length) % events.length);
   };
 
   const goToImage = (index: any) => {
     setCurrentIndex(index);
   };
 
-  const currentImage = images[currentIndex];
+  const currentImage = events[currentIndex];
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 md:p-8" id="events">
+    <div
+      className="min-h-screen flex items-center justify-center p-4 md:p-8"
+      id="events"
+    >
       <div className="max-w-7xl w-full">
         <div className="text-center mb-8">
           <h1 className="mb-6 text-center animate-fade-in">
-            <BlurFadeText title="Events" subtitle="Explore our events" />
+            <BlurFadeText title="Past Events" subtitle="Explore our events" />
           </h1>
         </div>
+        {/* <div className="bg-white w-full h-64">{JSON.stringify(events)}</div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left Column - Stacked Images */}
           <div className="relative h-[400px] md:h-[500px] flex items-center justify-center order-2 lg:order-1">
-            {images.map((image, index) => {
+            {events.map((image, index) => {
               const offset = index - currentIndex;
               const absOffset = Math.abs(offset);
 
               if (absOffset > 2) return null;
 
-              let zIndex = images.length - absOffset;
+              let zIndex = events.length - absOffset;
               let scale = 1 - absOffset * 0.08;
               let translateX = offset * 30;
               let translateY = absOffset * 15;
@@ -126,7 +84,7 @@ export default function Gallery() {
                   <div className="bg-white rounded-4xl overflow-hidden shadow-3xl">
                     <div className="aspect-[4/3] overflow-hidden">
                       <img
-                        src={image.url}
+                        src={image.image}
                         alt={image.title}
                         className="w-full h-full object-cover"
                       />
@@ -181,22 +139,23 @@ export default function Gallery() {
           {/* Right Column - Description */}
           <div className="order-1 lg:order-2 space-y-6">
             <div key={currentIndex} className="animate-fadeIn">
-              <span className="inline-block px-4 py-2 bg-purple-500/20 backdrop-blur-sm text-purple-300 rounded-full text-sm font-semibold mb-4 border border-purple-400/30">
-                {currentImage.category}
+              <span className="inline-block px-4 py-2 bg-orange-500/50 backdrop-blur-sm text-white rounded-full text-sm font-semibold mb-4 border border-purple-400/30">
+                {currentImage?.tag}
               </span>
 
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                {currentImage.title}
+                {currentImage?.title}
               </h2>
 
               <p className="text-slate-300 text-lg leading-relaxed mb-6">
-                {currentImage.description}
+                <span className="text-sm">Theme: </span>
+                <span className=""> {currentImage?.subtitle}</span>
               </p>
 
               <div className="space-y-3 text-slate-400">
                 <div className="flex items-center gap-3">
                   <svg
-                    className="w-5 h-5 text-purple-400"
+                    className="w-5 h-5 text-orange-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -214,12 +173,31 @@ export default function Gallery() {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <span>{currentImage.location}</span>
+                  <span>{currentImage?.address}</span>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <svg
-                    className="w-5 h-5 text-purple-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 text-orange-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8 7V3m8 4V3m-9 8h10m-12 8h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3m-10 2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"
+                    />
+                  </svg>
+
+                  <span>{currentImage?.date}</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <svg
+                    className="w-5 h-5 text-orange-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -237,19 +215,19 @@ export default function Gallery() {
                       d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <span>by {currentImage.photographer}</span>
+                  <span>by {currentImage?.shots}</span>
                 </div>
               </div>
 
               <div className="mt-8 flex items-center gap-4">
                 <span className="text-slate-400 text-sm font-medium">
-                  {currentIndex + 1} / {images.length}
+                  {currentIndex + 1} / {events.length}
                 </span>
                 <div className="flex-1 h-1 bg-slate-700 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-700"
+                    className="h-full bg-gradient-to-r from-orange-500 to-orange-900 rounded-full transition-all duration-700"
                     style={{
-                      width: `${((currentIndex + 1) / images.length) * 100}%`
+                      width: `${((currentIndex + 1) / events.length) * 100}%`
                     }}
                   />
                 </div>
@@ -258,13 +236,13 @@ export default function Gallery() {
 
             {/* Dots Navigation */}
             <div className="flex gap-2 pt-4">
-              {images.map((_, index) => (
+              {events.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToImage(index)}
                   className={`transition-all duration-300 rounded-full ${
                     index === currentIndex
-                      ? "w-10 h-3 bg-purple-500"
+                      ? "w-10 h-3 bg-orange-700"
                       : "w-3 h-3 bg-slate-600 hover:bg-slate-500"
                   }`}
                   aria-label={`Go to image ${index + 1}`}
