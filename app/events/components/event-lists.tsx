@@ -2,15 +2,14 @@
 import { supabase } from '@/lib/supabaseClient';
 import { useEffect, useState } from 'react';
 
-export default function PastorAdmin() {
+export default function EventAdmin() {
 
-    const [pastors, setPastors] = useState<any>([]);
+    const [events, setevents] = useState<any>([]);
 
     const fetchEvents = async () => {
-        const { data, error } = await supabase.from("pastors").select("*");
-        console.log(data);
+        const { data, error } = await supabase.from("events").select("*");
         if (error) console.error("Error fetching users:", error);
-        else setPastors(data || []);
+        else setevents(data || []);
     };
 
     useEffect(() => {
@@ -22,14 +21,14 @@ export default function PastorAdmin() {
     const [sortField, setSortField] = useState('name');
     const [sortDirection, setSortDirection] = useState('asc');
 
-    // Filter and sort pastors
-    const filteredPastors = pastors
-        .filter((pastor: any) => {
-            const matchesSearch = pastor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                pastor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                pastor.address.toLowerCase().includes(searchTerm.toLowerCase());
+    // Filter and sort events
+    const filteredevents = events
+        .filter((event: any) => {
+            const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                event.address.toLowerCase().includes(searchTerm.toLowerCase());
 
-            const matchesStatus = statusFilter === 'All' || pastor.status === statusFilter;
+            const matchesStatus = statusFilter === 'All' || event.status === statusFilter;
 
             return matchesSearch && matchesStatus;
         })
@@ -58,10 +57,10 @@ export default function PastorAdmin() {
         }
     };
 
-    type PastorStatus = 'Active' | 'Inactive' | 'Pending';
+    type eventstatus = 'Active' | 'Inactive' | 'Pending';
 
-    const getStatusBadge = (status: PastorStatus) => {
-        const statusStyles: Record<PastorStatus, string> = {
+    const getStatusBadge = (status: eventstatus) => {
+        const statusStyles: Record<eventstatus, string> = {
             Active: 'bg-green-100 text-green-800',
             Inactive: 'bg-red-100 text-red-800',
             Pending: 'bg-yellow-100 text-yellow-800'
@@ -75,15 +74,15 @@ export default function PastorAdmin() {
     };
 
     const handleStatusChange = (id: any, newStatus: any) => {
-        setPastors(pastors.map((pastor: any) =>
-            pastor.id === id ? { ...pastor, status: newStatus } : pastor
+        setevents(events.map((event: any) =>
+            event.id === id ? { ...event, status: newStatus } : event
         ));
     };
 
     const handleDelete = async (id: number) => {
         try {
             const { data, error } = await supabase
-                .from("pastors")
+                .from("events")
                 .delete()
                 .eq("id", id);
 
@@ -102,9 +101,9 @@ export default function PastorAdmin() {
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Pastors Lists</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">events Lists</h1>
                     <p className="mt-2 text-sm text-gray-600">
-                        Manage pastor accounts and their church information
+                        Manage event accounts and their church information
                     </p>
                 </div>
 
@@ -121,7 +120,7 @@ export default function PastorAdmin() {
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Search pastors..."
+                                    placeholder="Search events..."
                                     className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -129,16 +128,15 @@ export default function PastorAdmin() {
                             </div>
 
                             {/* Status Filter */}
-                        
                         </div>
 
-                        {/* Add Pastor Button */}
-                        <a href="/pastors/create">
+                        {/* Add event Button */}
+                        <a href="/events/create">
                             <button className="w-full sm:w-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
-                                Add Pastor
+                                Add event
                             </button>
                         </a>
                     </div>
@@ -147,16 +145,16 @@ export default function PastorAdmin() {
                 {/* Table */}
                 <div className="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
                     {/* Desktop Table */}
-                    {/* {JSON.stringify(filteredPastors)} */}
+                    {/* {JSON.stringify(filteredevents)} */}
                     <div className="hidden lg:block overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
                                     {[
-                                        { key: 'name', label: 'Pastor' },
+                                        { key: 'name', label: 'event' },
                                         { key: 'location', label: 'Location' },
-                                        { key: 'position', label: 'Position' },
-                                        { key: 'joinDate', label: 'Start Preaching' },
+                                        { key: 'guess', label: 'Guess Speaker' },
+                                        { key: 'date', label: 'Date' },
                                         { key: 'actions', label: 'Actions' }
                                     ].map((column) => (
                                         <th
@@ -177,36 +175,37 @@ export default function PastorAdmin() {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {filteredPastors.map((pastor: any) => (
+                                {filteredevents.map((event: any) => (
 
-                                    <tr key={pastor.id} className="hover:bg-gray-50">
+                                    <tr key={event.id} className="hover:bg-gray-50">
 
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0 h-10 w-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
-                                                    <img className='h-full w-full rounded-full' src={pastor?.image} alt="" />
+                                                    <img className='h-full w-full rounded-full' src={event?.image} alt="" />
                                                 </div>
                                                 <div className="ml-4">
-                                                    <div className="text-sm font-medium text-gray-900">{pastor?.name}</div>
-                                                    <div className="text-sm text-gray-500">{pastor?.email}</div>
-                                                    <div className="text-sm text-gray-500">{pastor?.phone}</div>
+                                                    <div className="text-sm font-medium text-gray-900">{event?.title}</div>
+                                                    <div className="text-sm text-gray-500">{event?.email}</div>
+                                                    <div className="text-sm text-gray-500">{event?.subtitle}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">{pastor?.address}</div>
+                                            <div className="text-sm text-gray-900">{event?.address}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">{pastor?.rank}</div>
+                                            <div className="text-sm text-gray-900">{event?.gspeaker}</div>
                                         </td>
+
+
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {new Date(pastor?.startdate).toLocaleDateString()}
+                                            {new Date(event?.date).toLocaleDateString()}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div className="flex space-x-2">
-
                                                 <button
-                                                    onClick={() => handleDelete(pastor.id)}
+                                                    onClick={() => handleDelete(event.id)}
                                                     className="text-red-600 hover:text-red-900"
                                                 >
                                                     Delete
@@ -222,44 +221,43 @@ export default function PastorAdmin() {
 
                     {/* Mobile Cards */}
                     <div className="lg:hidden">
-                        {filteredPastors.map((pastor: any) => (
-                            <div key={pastor.id} className="border-b border-gray-200 p-4 hover:bg-gray-50">
+                        {filteredevents.map((event: any) => (
+                            <div key={event.id} className="border-b border-gray-200 p-4 hover:bg-gray-50">
                                 <div className="flex items-start justify-between mb-3">
                                     <div className="flex items-center">
                                         <div className="flex-shrink-0 h-12 w-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
-                                            <img className='h-full w-full rounded-full' src={pastor?.image} alt="" />
+                                            <img className='h-full w-full rounded-full' src={event?.image} alt="" />
                                         </div>
                                         <div className="ml-4">
-                                            <h3 className="text-sm font-medium text-gray-900">{pastor.name}</h3>
-                                            <p className="text-sm text-gray-500">{pastor.email}</p>
+                                            <h3 className="text-sm font-medium text-gray-900">{event.title}</h3>
+                                            <p className="text-sm text-gray-500">{event.subtitle}</p>
                                         </div>
                                     </div>
-                                    {getStatusBadge(pastor.status as PastorStatus)}
+                                    {getStatusBadge(event.status as eventstatus)}
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4 text-sm">
                                     <div>
                                         <span className="font-medium text-gray-500">Location:</span>
-                                        <p className="text-gray-900">{pastor?.address}</p>
+                                        <p className="text-gray-900">{event?.address}</p>
                                     </div>
                                     <div>
-                                        <span className="font-medium text-gray-500">Position:</span>
-                                        <p className="text-gray-900">{pastor?.rank}</p>
+                                        <span className="font-medium text-gray-500">Guess Speaker:</span>
+                                        <p className="text-gray-900">{event?.gspeaker}</p>
                                     </div>
                                     <div>
                                         <span className="font-medium text-gray-500">Join Date:</span>
-                                        <p className="text-gray-900">{new Date(pastor?.startdate).toLocaleDateString()}</p>
+                                        <p className="text-gray-900">{new Date(event?.date).toLocaleDateString()}</p>
                                     </div>
                                 </div>
 
                                 <div className="mt-4 flex justify-end space-x-2">
                                     <button
-                                        onClick={() => handleDelete(pastor.id)}
+                                        onClick={() => handleDelete(event.id)}
                                         className="text-red-600 hover:text-red-900"
                                     >
                                         Delete
                                     </button>
-
                                 </div>
                             </div>
                         ))}
@@ -267,12 +265,12 @@ export default function PastorAdmin() {
                 </div>
 
                 {/* Empty State */}
-                {filteredPastors.length === 0 && (
+                {filteredevents.length === 0 && (
                     <div className="text-center py-12">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-gray-900">No pastors found</h3>
+                        <h3 className="mt-2 text-sm font-medium text-gray-900">No events found</h3>
                         <p className="mt-1 text-sm text-gray-500">
                             Try adjusting your search or filter to find what you're looking for.
                         </p>
@@ -282,7 +280,7 @@ export default function PastorAdmin() {
                 {/* Pagination */}
                 <div className="mt-6 flex items-center justify-between">
                     <div className="text-sm text-gray-700">
-                        Showing <span className="font-medium">{filteredPastors.length}</span> of <span className="font-medium">{pastors.length}</span> pastors
+                        Showing <span className="font-medium">{filteredevents.length}</span> of <span className="font-medium">{events.length}</span> events
                     </div>
                     <div className="flex space-x-2">
                         <button className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">

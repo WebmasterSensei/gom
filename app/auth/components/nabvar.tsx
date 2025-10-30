@@ -32,7 +32,7 @@ export default function NavBarAuth() {
                                 Pastors
                             </a>
                             <a
-                                href="#events"
+                                href="/events"
                                 className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                             >
                                 Events
@@ -91,6 +91,12 @@ export default function NavBarAuth() {
                                 className="block px-3 py-2 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
                             >
                                 Pastors
+                            </a>
+                            <a
+                                href="/events"
+                                className="block px-3 py-2 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
+                            >
+                                Events
                             </a>
 
                             <form className="w-full" action="/logout" method="post" >

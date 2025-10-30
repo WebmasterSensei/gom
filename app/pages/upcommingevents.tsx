@@ -67,9 +67,8 @@ export default function UpcomingEvents() {
                 {upcommevents.map((event, index) => (
                   <div
                     key={event.id}
-                    className={`relative flex flex-col md:flex-row gap-8 items-center ${
-                      index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                    }`}
+                    className={`relative flex flex-col md:flex-row gap-8 items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                      }`}
                   >
                     {/* Timeline dot */}
                     <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg z-10"></div>
@@ -100,12 +99,30 @@ export default function UpcomingEvents() {
                         <div className="flex items-center text-slate-300">
                           <Calendar className="w-4 h-4 mr-2 text-blue-600" />
                           <span className="text-sm font-medium">
-                            {event?.date}
+                            {new Date(event?.date).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
                           </span>
                         </div>
                         <div className="flex items-center text-slate-300">
                           <Clock className="w-4 h-4 mr-2 text-purple-600" />
-                          <span className="text-sm">{event?.time}</span>
+                          <span className="text-sm">
+                            {event?.starttime
+                              ? new Date(`1970-01-01T${event.starttime}`).toLocaleTimeString([], {
+                                hour: "numeric",
+                                minute: "2-digit",
+                                hour12: true,
+                              })
+                              : ""} to  {event?.endtime
+                                ? new Date(`1970-01-01T${event.endtime}`).toLocaleTimeString([], {
+                                  hour: "numeric",
+                                  minute: "2-digit",
+                                  hour12: true,
+                                })
+                                : ""}
+                          </span>
                         </div>
                         <div className="flex items-center text-slate-300">
                           <MapPin className="w-4 h-4 mr-2 text-red-600" />
@@ -119,15 +136,11 @@ export default function UpcomingEvents() {
 
                       <div>
                         <img
-                          className="rounded-2xl"
+                          className="rounded-2xl h-44 w-full"
                           src={event?.image}
                           alt=""
                         />
                       </div>
-
-                      {/* <button className="w-full bg-slate-900 text-white py-2.5 rounded-xl font-medium hover:bg-blue-600 transition-colors text-sm">
-                    Learn More
-                  </button> */}
                     </div>
                   </div>
                 ))}
