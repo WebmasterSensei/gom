@@ -30,7 +30,7 @@ export default function UpcomingEvents() {
   }, []);
 
   return (
-    <div className="min-h-screen py-20 px-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800">
+    <div className="min-h-screen py-20 px-4 ">
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
