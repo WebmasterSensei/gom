@@ -12,11 +12,12 @@ import ContactUs from "./pages/contacus";
 import Footer from "./pages/footer";
 import UpcomingEvents from "./pages/upcommingevents";
 import Verses from "./pages/verse";
+import Church from "./pages/church";
 
 export default function Home() {
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-950 to-slate-600 dark:from-zinc-950 dark:via-black dark:to-zinc-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 dark:from-zinc-950 dark:via-black dark:to-zinc-900">
       {/* Navbar */}
       {/* <ParticlesComponent /> */}
       <NavBar />
@@ -28,7 +29,8 @@ export default function Home() {
       <UpcomingEvents />
       <AboutUs/>
       <Pastors />
-      <ContactUs />
+      {/* <ContactUs /> */}
+      <Church />
       <Footer />
     </div>
   );

@@ -38,10 +38,10 @@ export default function NavBarAuth() {
                                 Events
                             </a>
                             <a
-                                href="#contactus"
+                                href="/church"
                                 className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                             >
-                                Contact
+                                Churches
                             </a>
                             <a
                                 href="/"
@@ -98,6 +98,13 @@ export default function NavBarAuth() {
                             >
                                 Events
                             </a>
+                             <a
+                                href="/church"
+                                className="block px-3 py-2 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
+                            >
+                                Churches
+                            </a>
+
 
                             <form className="w-full" action="/logout" method="post" >
                             <button

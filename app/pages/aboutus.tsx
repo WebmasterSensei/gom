@@ -35,15 +35,15 @@ export default function AboutUs() {
             <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-600 rounded-2xl p-12 text-white shadow-xl">
               <div className="space-y-8">
                 <div>
-                  <div className="text-5xl font-bold mb-2">10+</div>
+                  <div className="text-5xl font-bold mb-2">Infinite</div>
                   <div className="text-blue-100">Years of Faithful Ministry</div>
                 </div>
                 <div>
-                  <div className="text-5xl font-bold mb-2">500K+</div>
+                  <div className="text-5xl font-bold mb-2">A Thousand+</div>
                   <div className="text-blue-100">Lives Reached Through the Gospel</div>
                 </div>
                 <div>
-                  <div className="text-5xl font-bold mb-2">50+</div>
+                  <div className="text-5xl font-bold mb-2">20+</div>
                   <div className="text-blue-100">Communities Sharing God's Word</div>
                 </div>
               </div>
