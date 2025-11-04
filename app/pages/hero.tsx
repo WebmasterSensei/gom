@@ -69,12 +69,22 @@ export default function Hero() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white dark:text-white mb-6">
-              God's Oracle
-              <span className="block bg-gradient-to-r from-orange-700 via-yellow-700 to-purple-800 bg-clip-text text-transparent">
-                Ministries
-              </span>
-            </h1>
+            <div className="text-center mb-6">
+              {/* Logo / Image */}
+              <img
+                src="/images/gomlogo.png" // replace with your actual image path
+                alt="God's Oracle Logo"
+                className="mx-auto w-46 h-46 mb-4 rounded-full shadow-lg object-cover"
+              />
+
+              {/* Heading */}
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white dark:text-white mb-6">
+                God's Oracle
+                <span className="block bg-gradient-to-r from-orange-700 via-yellow-700 to-purple-800 bg-clip-text text-transparent">
+                  Ministries
+                </span>
+              </h1>
+            </div>
 
             {/* Subheadline */}
             <p className="text-xl sm:text-2xl text-gray-300 dark:text-zinc-400 mb-10 max-w-3xl mx-auto">

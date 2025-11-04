@@ -18,7 +18,6 @@ export default function Pastors() {
 
   return (
     <>
-      {/* Team Section */}
       <div className="min-h-screen py-20" id="pastors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Title Section */}
@@ -35,15 +34,11 @@ export default function Pastors() {
             </div>
           </div>
 
-          {/* Avatar/Featured Leader */}
-         
-
           {/* Team Grid */}
-          <div className="grid md:grid-cols-3 gap-16">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
             {pastors.map((member, index) => (
               <div key={index} className="text-center group">
                 <div className="relative mb-6 inline-block">
-        
                   <div
                     style={{
                       backgroundImage: `url(${member?.image})`,
@@ -51,34 +46,37 @@ export default function Pastors() {
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat"
                     }}
-                    className={`relative w-48 h-48 rounded-full flex flex-col items-center justify-center mx-auto 
-    group-hover:scale-110 transition-all duration-700 border-4 
-    ${member?.borderColor} group-hover:shadow-2xl ${member?.glowColor}`}
+                    className={`relative w-20 h-20 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full flex flex-col items-center justify-center mx-auto 
+              group-hover:scale-110 transition-all duration-700 border-4 
+              ${member?.borderColor} group-hover:shadow-2xl ${member?.glowColor}`}
                   >
                     {/* Overlay gradient layers */}
                     <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/40 to-transparent"></div>
                     <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.3),transparent_50%)]"></div>
-
-                    {/* Symbol & Nation Text */}
                   </div>
                 </div>
 
                 <h3
-                  className="text-2xl font-bold text-amber-100 mb-2"
+                  className="text-[12px] sm:text-xl md:text-2xl font-bold text-amber-100 mb-2"
                   style={{ fontFamily: "serif" }}
                 >
                   {member?.name}
                 </h3>
-                <p
-                  className={`font-bold text-base mb-1 tracking-wide text-white`}
-                >
+                <p className="font-bold text-[10px] sm:text-base mb-1 tracking-wide text-white">
                   {member?.rank}
                 </p>
-                <p className="text-gray-500 text-sm tracking-wider">
+                <p className="text-gray-200 text-[9px] sm:text-sm tracking-wider">
                   {member?.address}
                 </p>
-                <p className="text-gray-500 text-[12px] tracking-wider">
-                  Since: {member?.startdate}
+                <p className="text-gray-300 text-[9px] sm:text-[12px] tracking-wider">
+                  Since:{" "}
+                  {member?.startdate
+                    ? new Date(member.startdate).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric"
+                      })
+                    : ""}
                 </p>
               </div>
             ))}

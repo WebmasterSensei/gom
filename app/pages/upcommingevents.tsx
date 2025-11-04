@@ -31,7 +31,7 @@ export default function UpcomingEvents() {
 
   return (
     <div className="min-h-screen py-20 px-4 ">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
           <h1 className="mb-6 text-center animate-fade-in">
@@ -62,7 +62,7 @@ export default function UpcomingEvents() {
               {upcommevents.map((event) => (
                 <div
                   key={event.id}
-                  className="bg-slate-800/50 rounded-2xl p-6 shadow-md hover:shadow-2xl transition-transform duration-300 hover:scale-[1.03]"
+                  className="bg-linear-to-br from-slate-950 via-blue-950/50 to-slate-900 rounded-2xl p-6 shadow-md hover:shadow-2xl transition-transform duration-300 hover:scale-[1.03]"
                 >
                   <div className="flex items-center justify-between mb-3">
                     <span className="px-3 py-1 bg-gradient-to-br from-orange-700 to-yellow-600 rounded-full text-sm font-semibold text-white border border-slate-600">

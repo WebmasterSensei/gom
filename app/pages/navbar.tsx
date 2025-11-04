@@ -12,7 +12,7 @@ export default function NavBar() {
             {/* Logo */}
             <div className="flex-shrink-0">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-700 to-yellow-600 bg-clip-text text-transparent">
-                GOM
+               <img src="/images/gomlogo.png" className="h-15" alt="" />
               </h1>
             </div>
 
@@ -62,7 +62,7 @@ export default function NavBar() {
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400"
+                className="text-zinc-200 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400"
               >
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -72,23 +72,44 @@ export default function NavBar() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-black border-t border-zinc-200 dark:border-zinc-800">
-            <div className="px-4 pt-2 pb-4 space-y-2">
+          <div className="md:hidden dark:bg-black border-t border-zinc-200 dark:border-zinc-800">
+            <div className="px-4 pt-2 pb-4 space-y-2 text-center">
+                <a
+                href="#hero"
+                className="block px-3 py-2 text-white dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
+              >
+                Home
+              </a>
              
               <a
-                href="#about"
+                href="#aboutus"
                 className="block px-3 py-2 text-white dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
               >
                 About
               </a>
+
+               <a
+                href="#events"
+                className="block px-3 py-2 text-white dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
+              >
+                Events
+              </a>
+
+               <a
+                href="#pastors"
+                className="block px-3 py-2 text-white dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
+              >
+                Pastors
+              </a>
+             
              
               <a
-                href="#contact"
+                href="#contactus"
                 className="block px-3 py-2 text-white dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
               >
                 Contact
               </a>
-              <button className="w-full mt-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:shadow-lg transition-all">
+              <button className="w-full mt-2 px-6 py-2 bg-gradient-to-r from-orange-700 to-yellow-600 text-white rounded-full hover:shadow-lg transition-all">
                 Get Started
               </button>
             </div>

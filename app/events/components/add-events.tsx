@@ -70,7 +70,7 @@ export default function AddEventComponent() {
 
             if (insertError) throw insertError
 
-            alert("✅ Pastor added successfully!")
+            alert("✅ Event added successfully!")
             setFormData({ title: "", address: "", subtitle: "", date: "", gspeaker: "", tag: "", starttime: '', endtime: "" })
             setImageFile(null)
         } catch (err: any) {
