@@ -15,7 +15,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GOM",
   description: "Created By kenjey webmastersensei",
+  icons: {
+    icon: [
+      { url: "/images/gomlogo.png", type: "image/png" },
+    ],
+  },
 };
+
 
 export default function RootLayout({
   children,
