@@ -101,7 +101,7 @@ export default function EventAdmin() {
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">events Lists</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Events Lists</h1>
                     <p className="mt-2 text-sm text-gray-600">
                         Manage event Schedules
                     </p>
