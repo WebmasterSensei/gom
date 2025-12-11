@@ -238,7 +238,7 @@ export default function AddEventComponent() {
                     disabled={loading}
                     className="flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-[15px] px-4 py-2.5 rounded-md shadow-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {loading ? "Adding..." : "Add Pastor"}
+                    {loading ? "Adding..." : "Add Event"}
                 </button>
             </form>
         </section>

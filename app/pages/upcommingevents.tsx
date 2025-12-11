@@ -65,7 +65,7 @@ export default function UpcomingEvents() {
                   className="bg-linear-to-br from-slate-950 via-blue-950/50 to-slate-900 rounded-2xl p-6 shadow-md hover:shadow-2xl transition-transform duration-300 hover:scale-[1.03]"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="px-3 py-1 bg-gradient-to-br from-orange-700 to-yellow-600 rounded-full text-sm font-semibold text-white border border-slate-600">
+                    <span className="px-3 py-1 bg-linear-to-br from-orange-700 to-yellow-600 rounded-full text-sm font-semibold text-white border border-slate-600">
                       {event?.tag}
                     </span>
                     <Calendar className="w-5 h-5 text-slate-400" />
