@@ -43,12 +43,12 @@ export default function NavBar() {
               >
                 Events
               </a>
-               <a
+               {/* <a
                 href="#contactus"
                 className="text-white dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
                 Contact
-              </a>
+              </a> */}
             </div>
 
             {/* CTA Button */}
