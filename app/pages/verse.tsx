@@ -90,7 +90,7 @@ export default function Verses() {
           <div className="md:col-span-1 flex flex-col items-center justify-center text-center p-6 rounded-2xl  shadow-lg">
             <img
               className="rounded-2xl"
-              src="https://images.pexels.com/photos/1615776/pexels-photo-1615776.jpeg"
+              src="/images/bible.jpg"
               alt=""
             />
           </div>
