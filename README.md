@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# God's Oracle Ministries (GOM) — Website
+
+Official website for **God's Oracle Ministries**, built with Next.js (App
+Router), **Appwrite** (auth, database & storage), and **GSAP** animations.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Appwrite setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses Appwrite for everything: email/password auth, the database
+(`events`, `pastors`, `churches`, `contact` collections), and file storage
+(event & pastor images).
 
-## Learn More
+### 1. Create an Appwrite project
 
-To learn more about Next.js, take a look at the following resources:
+1. Create the project in the [Appwrite Console](https://cloud.appwrite.io) and
+   note its **Project ID** and region endpoint (e.g.
+   `https://fra.cloud.appwrite.io/v1`).
+2. Add a **Web platform** for your app URL (`http://localhost:3000` for dev).
+3. Create an **API key** under *Integrations → API keys* with these scopes:
+   - `users.read`, `users.write`
+   - `sessions.read`, `sessions.write`
+   - `databases.read`, `databases.write`
+   - `storage.read`, `storage.write`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Environment variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Copy `.env.local` fields:
 
-## Deploy on Vercel
+```env
+NEXT_PUBLIC_APPWRITE_ENDPOINT=https://<region>.cloud.appwrite.io/v1
+NEXT_PUBLIC_APPWRITE_PROJECT_ID=<project-id>
+APPWRITE_API_KEY=<server-only-api-key>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+NEXT_PUBLIC_APPWRITE_DATABASE_ID=gom
+NEXT_PUBLIC_APPWRITE_EVENTS_COLLECTION_ID=events
+NEXT_PUBLIC_APPWRITE_PASTORS_COLLECTION_ID=pastors
+NEXT_PUBLIC_APPWRITE_CHURCHES_COLLECTION_ID=churches
+NEXT_PUBLIC_APPWRITE_CONTACT_COLLECTION_ID=contact
+NEXT_PUBLIC_APPWRITE_EVENT_IMAGES_BUCKET_ID=event_images
+NEXT_PUBLIC_APPWRITE_PASTO_IMAGES_BUCKET_ID=pasto_images
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Run the setup script
+
+The bootstrap script creates the database, collections & attributes, storage
+buckets, and permissions automatically:
+
+```bash
+node scripts/setup-appwrite.mjs
+```
+
+Optionally set `APPWRITE_ADMIN_EMAIL` / `APPWRITE_ADMIN_PASSWORD` in
+`.env.local` and the script will create an admin user you can sign in as.
+
+### Data model
+
+| Collection | Fields |
+| --- | --- |
+| `events` | title, subtitle, address, date (datetime), starttime, endtime, gspeaker, tag, image, status |
+| `pastors` | name, rank, address, email, phone, startdate, image, borderColor, glowColor, status |
+| `churches` | name, address, desc, map (Google Maps embed URL), status |
+| `contact` | name, email, phone, message, createdAt |
+
+Permissions: public read for `events`/`pastors`/`churches` + images (so the
+website works for visitors). Authenticated users (any logged-in Appwrite user)
+can create/update/delete. `contact` allows anyone to submit a message and
+admins to read them.
+
+### Email/password auth
+
+Sign in at `/login`. Email/password is enabled by default in Appwrite. Logged-in
+users reach the admin dashboard at `/auth` (Events, Pastors, Churches admin).
+
+## Stack
+
+- **Next.js 16** (App Router) + Tailwind CSS v4
+- **Appwrite** — `@appwrite.io/react` (auth/SSR), `appwrite` (web SDK),
+  `node-appwrite` (server/setup)
+- **GSAP** + ScrollTrigger for scroll animations
+- **Bible API** (`bible-api.com`) for the daily verse (free, no key)

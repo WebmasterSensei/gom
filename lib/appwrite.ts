@@ -1,0 +1,80 @@
+const publicEnv = (
+  key:
+    | "NEXT_PUBLIC_APPWRITE_ENDPOINT"
+    | "NEXT_PUBLIC_APPWRITE_PROJECT_ID"
+    | "NEXT_PUBLIC_APPWRITE_DATABASE_ID"
+    | "NEXT_PUBLIC_APPWRITE_EVENTS_COLLECTION_ID"
+    | "NEXT_PUBLIC_APPWRITE_PASTORS_COLLECTION_ID"
+    | "NEXT_PUBLIC_APPWRITE_CHURCHES_COLLECTION_ID"
+    | "NEXT_PUBLIC_APPWRITE_CONTACT_COLLECTION_ID"
+    | "NEXT_PUBLIC_APPWRITE_EVENT_IMAGES_BUCKET_ID"
+): string => {
+  const values = {
+    NEXT_PUBLIC_APPWRITE_ENDPOINT:
+      process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT,
+
+    NEXT_PUBLIC_APPWRITE_PROJECT_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID,
+
+    NEXT_PUBLIC_APPWRITE_DATABASE_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+
+    NEXT_PUBLIC_APPWRITE_EVENTS_COLLECTION_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_EVENTS_COLLECTION_ID,
+
+    NEXT_PUBLIC_APPWRITE_PASTORS_COLLECTION_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_PASTORS_COLLECTION_ID,
+
+    NEXT_PUBLIC_APPWRITE_CHURCHES_COLLECTION_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_CHURCHES_COLLECTION_ID,
+
+    NEXT_PUBLIC_APPWRITE_CONTACT_COLLECTION_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_CONTACT_COLLECTION_ID,
+
+    NEXT_PUBLIC_APPWRITE_EVENT_IMAGES_BUCKET_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_EVENT_IMAGES_BUCKET_ID,
+
+  };
+
+  const value = values[key];
+
+  if (!value) {
+    throw new Error(`Missing environment variable: ${key}`);
+  }
+
+  return value;
+};
+
+export const appwriteConfig = {
+  endpoint: publicEnv("NEXT_PUBLIC_APPWRITE_ENDPOINT"),
+  projectId: publicEnv("NEXT_PUBLIC_APPWRITE_PROJECT_ID"),
+
+  // Server-side only
+  apiKey: process.env.APPWRITE_API_KEY ?? "",
+
+  databaseId: publicEnv("NEXT_PUBLIC_APPWRITE_DATABASE_ID"),
+  eventsCollectionId: publicEnv(
+    "NEXT_PUBLIC_APPWRITE_EVENTS_COLLECTION_ID"
+  ),
+  pastorsCollectionId: publicEnv(
+    "NEXT_PUBLIC_APPWRITE_PASTORS_COLLECTION_ID"
+  ),
+  churchesCollectionId: publicEnv(
+    "NEXT_PUBLIC_APPWRITE_CHURCHES_COLLECTION_ID"
+  ),
+  contactCollectionId: publicEnv(
+    "NEXT_PUBLIC_APPWRITE_CONTACT_COLLECTION_ID"
+  ),
+  eventImagesBucketId: publicEnv(
+    "NEXT_PUBLIC_APPWRITE_EVENT_IMAGES_BUCKET_ID"
+  ),
+  pastoImagesBucketId: publicEnv(
+    "NEXT_PUBLIC_APPWRITE_EVENT_IMAGES_BUCKET_ID"
+  ),
+};
+
+export const isAppwriteConfigured = () =>
+  Boolean(
+    process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT &&
+      process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID
+  );

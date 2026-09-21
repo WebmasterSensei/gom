@@ -1,15 +1,11 @@
-import { createClient } from "@/lib/supabaseServer";
+import { getCurrentUser } from "@/lib/appwriteServer";
 
 import { redirect } from "next/navigation";
 import NavBarAuth from "../auth/components/nabvar";
 import PastorAdmin from "./components/pastorsadmin";
 
 export default async function Dashboard() {
-    const supabase = await createClient();
-
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getCurrentUser();
 
     if (!user) {
         redirect("/login");

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,500;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,500;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 
 @import "tailwindcss";
 
@@ -7,10 +7,21 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif-garamond), Georgia, "Times New Roman", serif;
+
+  --color-gold: #c9a227;
+  --color-gold-deep: #b8860b;
+  --color-cream: #faf7f0;
+  --color-cream-dark: #f4ecdf;
+  --color-ink: #33281a;
+  --color-ink-soft: #4a3f2c;
+  --color-muted-warm: #7c6f5a;
+  --color-burgundy: #7d2e3d;
+  --color-sand: #ece3cd;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -46,15 +57,25 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Poppins", sans-serif;
-  font-weight: 500;
   font-style: normal;
+  background-color: #faf7f0;
+  color: #33281a;
+}
+
+::selection {
+  background-color: rgba(201, 162, 39, 0.25);
+  color: #33281a;
 }
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(0.984 0.003 247.858);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);

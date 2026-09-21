@@ -1,89 +1,126 @@
 "use client";
-import { useEffect, useState } from "react";
-import { BlurFadeText } from "./partials/blurfade";
-import { supabase } from "@/lib/supabaseClient";
 
-export default function Church() {
-  const [churches, setChurches] = useState<any[]>([]);
+import { MapPin, Church as ChurchIcon, ExternalLink } from "lucide-react";
+import { Databases, Query } from "appwrite";
+import { useAppwrite } from "@appwrite.io/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
+import { appwriteConfig } from "@/lib/appwrite";
+import SectionHeading from "./partials/section-heading";
 
-  const fetchEvents = async () => {
-    const { data, error } = await supabase.from("churches").select("*");
-    if (error) console.error("Error fetching users:", error);
-    else setChurches(data || []);
-  };
+interface ChurchDoc {
+  $id: string;
+  name: string;
+  address: string;
+  desc: string;
+  map: string;
+}
+
+export default function Churches() {
+  const { client } = useAppwrite();
+  const databases = useMemo(() => new Databases(client), [client]);
+  const root = useRef<HTMLElement>(null);
+
+  const [churches, setChurches] = useState<ChurchDoc[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
-  //   const churches = [
-  //     {
-  //       name: "God’s Oracle Main Church",
-  //       address: "Cebu City, Philippines",
-  //       desc: "Our main sanctuary and headquarters where it all began.",
-  //       map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.450106369651!2d123.89314327576964!3d10.309348589826014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a99954a5a5028d%3A0x94ec5ad3f9cda4f!2sCebu%20City%20Philippines!5e0!3m2!1sen!2sph!4v1693418570294!5m2!1sen!2sph"
-  //     },
-  //     {
-  //       name: "God’s Oracle North Branch",
-  //       address: "Mandaue City, Philippines",
-  //       desc: "A growing community focused on youth and family ministries.",
-  //       map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.756904416304!2d123.94069687576935!3d10.291716789838447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a999e79f5c2a19%3A0x94d49234b4b0e9d2!2sMandaue%20City!5e0!3m2!1sen!2sph!4v1693418770294!5m2!1sen!2sph"
-  //     },
-  //     {
-  //       name: "God’s Oracle South Church",
-  //       address: "Talisay City, Philippines",
-  //       desc: "Bringing light and hope to the southern communities.",
-  //       map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.801183699517!2d123.85064927576924!3d10.28931168983979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9993fa7aa8e3d%3A0xb06b8cb621c36d2d!2sTalisay%20City!5e0!3m2!1sen!2sph!4v1693418970294!5m2!1sen!2sph"
-  //     }
-  //   ];
+    databases
+      .listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.churchesCollectionId,
+        [Query.equal("status", ["Active"]), Query.orderAsc("$createdAt")]
+      )
+      .then((res) => setChurches(res.documents as unknown as ChurchDoc[]))
+      .catch((err) => console.error("Failed to load churches:", err))
+      .finally(() => setLoading(false));
+  }, [databases]);
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        ".church-card",
+        { opacity: 0, y: 44 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: { trigger: root.current, start: "top 78%" },
+        }
+      );
+    },
+    { scope: root }
+  );
 
   return (
-    <div
-      className="min-h-screen pb-20 md:py-20 md:lg-20 px-4 sm:px-6 lg:px-8  text-white"
-      id="churches"
-    >
-      {/* Title */}
-      <h1 className="mb-6 text-center animate-fade-in">
-        <BlurFadeText
+    <section id="churches" ref={root} className="bg-cream-dark/60 py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          overline="Where We Worship"
           title="Our Churches"
-          subtitle="Discover our branches and their mission across the region"
+          subtitle="Find a God's Oracle church near you, or worship with us at our sanctuaries."
         />
-      </h1>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {churches.map((church, index) => (
-          <div
-            key={index}
-            className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-600 rounded-2xl p-6 text-center shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300"
-          >
-            <h2 className="text-2xl font-semibold mb-2 text-amber-200">
-              {church.name}
-            </h2>
-            <p className="text-gray-400 mb-3">{church.address}</p>
-            <p className="text-gray-300 text-sm mb-4">{church.desc}</p>
-            <iframe
-              src={church.map}
-              width="100%"
-              height="200"
-              allowFullScreen
-              loading="lazy"
-              className="rounded-xl border-none shadow-inner"
-              title={`Map of ${church.name}`}
-            />
-          </div>
-        ))}
-      </div>
+        {loading ? (
+          <p className="mt-14 text-center text-sm text-muted-warm">Loading churches…</p>
+        ) : churches.length === 0 ? (
+          <p className="mt-14 text-center text-sm text-muted-warm">
+            Church locations are being added soon.
+          </p>
+        ) : (
+          <div className="mt-14 grid gap-8 md:grid-cols-2">
+            {churches.map((church) => (
+              <article
+                key={church.$id}
+                className="church-card overflow-hidden rounded-2xl border border-sand bg-white shadow-sm transition hover:-translate-y-1.5 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-4 border-b border-sand bg-gradient-to-r from-gold/10 to-transparent px-6 py-5">
+                  <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-deep to-gold text-white shadow-md">
+                    <ChurchIcon size={20} />
+                    <span className="absolute -inset-1 -z-10 rounded-full bg-gold/25 blur-sm"></span>
+                  </span>
+                  <div>
+                    <h3 className="font-serif text-2xl font-semibold text-ink">
+                      {church.name}
+                    </h3>
+                    <p className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-muted-warm">
+                      <MapPin size={12} className="text-gold-deep" />
+                      {church.address}
+                    </p>
+                  </div>
+                </div>
 
-      {/* Decorative Line */}
-      <div className="flex justify-center mt-20">
-        <div className="flex items-center gap-3">
-          <div className="w-24 h-px bg-gradient-to-r from-transparent to-amber-500/50"></div>
-          <div className="text-amber-500/50 text-sm tracking-widest">
-            ✝️ ✝️ ✝️
+                <div className="p-6">
+                  <p className="text-sm leading-relaxed text-muted-warm">{church.desc}</p>
+
+                  {church.map ? (
+                    <div className="mt-5 overflow-hidden rounded-xl border border-sand">
+                      <iframe
+                        src={church.map}
+                        title={`Map - ${church.name}`}
+                        className="h-52 w-full"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                        referrerPolicy="no-referrer-when-downgrade"
+                      ></iframe>
+                    </div>
+                  ) : (
+                    <div className="mt-5 flex h-32 items-center justify-center rounded-xl border border-dashed border-gold/40 bg-cream">
+                      <span className="inline-flex items-center gap-2 text-sm text-muted-warm">
+                        <ExternalLink size={16} /> Map coming soon
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </article>
+            ))}
           </div>
-          <div className="w-24 h-px bg-gradient-to-l from-transparent to-amber-500/50"></div>
-        </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 }

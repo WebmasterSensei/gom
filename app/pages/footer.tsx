@@ -1,73 +1,122 @@
+"use client";
+
+import { Church as ChurchIcon, Facebook, Instagram, Youtube, Heart } from "lucide-react";
+import Image from "next/image";
+
+const quickLinks = [
+  { href: "#hero", label: "Home" },
+  { href: "#aboutus", label: "About" },
+  { href: "#events", label: "Recent Gatherings" },
+  { href: "#upcoming", label: "Upcoming Services" },
+  { href: "#pastors", label: "Our Pastors" },
+  { href: "#contact", label: "Contact" },
+];
+
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="col-span-1 md:col-span-1">
-            <h2 className="text-2xl font-bold text-white mb-4">GOM</h2>
-            <p className="text-sm text-gray-400">
-              Building innovative solutions for a better tomorrow.
+    <footer className="border-t border-gold/20 bg-ink text-cream">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-4">
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/gomlogo.png"
+                alt="God's Oracle Ministries"
+                width={48}
+                height={48}
+                className="rounded-full border border-gold/40 object-cover"
+              />
+              <div>
+                <p className="font-serif text-2xl font-semibold leading-none">
+                  God&apos;s Oracle
+                </p>
+                <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-gold">
+                  Ministries
+                </p>
+              </div>
+            </div>
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-sand/70">
+              A dwelling place for prayer, worship, and the teaching of God&apos;s
+              Word — where lives are transformed and a community is built in
+              love.
             </p>
+            <div className="mt-6 flex items-center gap-3">
+              <a
+                href="#"
+                aria-label="Facebook"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:bg-gold hover:text-ink"
+              >
+                <Facebook size={18} />
+              </a>
+              <a
+                href="#"
+                aria-label="Instagram"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:bg-gold hover:text-ink"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="#"
+                aria-label="YouTube"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:bg-gold hover:text-ink"
+              >
+                <Youtube size={18} />
+              </a>
+            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Home</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">About</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Services</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Contact</a></li>
+            <h4 className="font-serif text-lg font-semibold text-gold">
+              Explore
+            </h4>
+            <ul className="mt-5 space-y-3 text-sm text-sand/80">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="transition hover:text-gold"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Service times */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Documentation</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Blog</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Support</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">FAQ</a></li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Contact</h3>
-            <ul className="space-y-2 text-sm">
-              <li>Email: info@gom.com</li>
-              <li>Phone: +1 (555) 123-4567</li>
-              <li className="pt-4 flex space-x-4">
-                <a href="#" className="hover:text-white transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                  </svg>
-                </a>
-                <a href="#" className="hover:text-white transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                </a>
-                <a href="#" className="hover:text-white transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
-                </a>
+            <h4 className="font-serif text-lg font-semibold text-gold">
+              Service Times
+            </h4>
+            <ul className="mt-5 space-y-3 text-sm text-sand/80">
+              <li>
+                <span className="block font-medium text-cream">Sunday Worship</span>
+                <span className="text-sand/60">10:00 AM – 12:30 PM</span>
+              </li>
+              <li>
+                <span className="block font-medium text-cream">Bible Study</span>
+                <span className="text-sand/60">Wednesdays · 6:30 PM</span>
+              </li>
+              <li>
+                <span className="block font-medium text-cream">Prayer Meeting</span>
+                <span className="text-sand/60">Fridays · 6:00 AM</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-12 pt-8 text-sm text-center md:flex md:justify-between md:text-left">
-          <p>&copy; 2025 GOM. All rights reserved.</p>
-          <div className="mt-4 md:mt-0 space-x-4">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
-          </div>
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-gold/15 pt-8 text-sm text-sand/60 sm:flex-row">
+          <p>
+            © {new Date().getFullYear()} God&apos;s Oracle Ministries. All rights
+            reserved.
+          </p>
+          <p className="inline-flex items-center gap-1.5">
+            Built with <Heart size={14} className="text-burgundy" fill="currentColor" /> &
+            guided by faith
+            <ChurchIcon size={15} className="ml-1 text-gold" />
+          </p>
         </div>
       </div>
     </footer>

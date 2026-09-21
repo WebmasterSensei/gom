@@ -1,15 +1,11 @@
 import NavBarAuth from "@/app/auth/components/nabvar";
-import { createClient } from "@/lib/supabaseServer";
+import { getCurrentUser } from "@/lib/appwriteServer";
 
 import { redirect } from "next/navigation";
 import AddChurhForm from "../component/addchuch";
 
 export default async function ChurchCreate() {
-    const supabase = await createClient();
-
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getCurrentUser();
 
     if (!user) {
         redirect("/login");

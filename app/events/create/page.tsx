@@ -1,15 +1,10 @@
-
 import NavBarAuth from "@/app/auth/components/nabvar";
-import { createClient } from "@/lib/supabaseServer";
+import { getCurrentUser } from "@/lib/appwriteServer";
 import { redirect } from "next/navigation";
 import AddEventComponent from "../components/add-events";
 
-export default async function AddEvents(){
-     const supabase = await createClient();
-
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+export default async function AddEvents() {
+    const user = await getCurrentUser();
 
     if (!user) {
         redirect("/login");
@@ -17,7 +12,7 @@ export default async function AddEvents(){
     return (
         <div className="max-w-screen py-15">
             <NavBarAuth />
-            <AddEventComponent/>
+            <AddEventComponent />
         </div>
     );
 }

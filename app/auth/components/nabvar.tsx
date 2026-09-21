@@ -1,73 +1,69 @@
 "use client"
-import { Menu, X } from "lucide-react";
+import { Menu, X, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@appwrite.io/react";
+import { useRouter } from "next/navigation";
 
 export default function NavBarAuth() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { signOut } = useAuth();
+    const router = useRouter();
+
+    const handleLogout = () => {
+        signOut.signOut({
+            onSuccess: () => {
+                router.push("/");
+                router.refresh();
+            },
+        });
+    };
+
+    const links = [
+        { href: "/auth", label: "Dashboard" },
+        { href: "/pastors", label: "Pastors" },
+        { href: "/events", label: "Events" },
+        { href: "/church", label: "Churches" },
+        { href: "/", label: "Web" },
+    ];
+
+    const linkClass =
+        "text-[#4a3f2c] hover:text-[#b8860b] transition-colors";
+
     return (
         <>
-            <nav className="fixed  top-0 left-0 right-0 z-50 backdrop-blur-md shadow-xl">
+            <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#e8dfca] bg-white/85 backdrop-blur-md shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         {/* Logo */}
-                        <div className="flex-shrink-0">
-                            <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-700 to-yellow-600 bg-clip-text text-transparent">
-                                Dashboard
+                        <div className="flex flex-shrink-0 items-center gap-2">
+                            <LayoutDashboard size={20} className="text-[#b8860b]" />
+                            <h1 className="text-xl font-serif font-semibold text-[#33281a]">
+                                GOM <span className="text-[#b8860b]">Admin</span>
                             </h1>
                         </div>
 
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center space-x-8">
-
-                            <a
-                                href="/auth"
-                                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                            >
-                                Home
-                            </a>
-                            <a
-                                href="/pastors"
-                                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                            >
-                                Pastors
-                            </a>
-                            <a
-                                href="/events"
-                                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                            >
-                                Events
-                            </a>
-                            <a
-                                href="/church"
-                                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                            >
-                                Churches
-                            </a>
-                            <a
-                                href="/"
-                                className="text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                            >
-                                Web
-                            </a>
+                            {links.map((link) => (
+                                <a key={link.href} href={link.href} className={linkClass}>
+                                    {link.label}
+                                </a>
+                            ))}
                         </div>
 
                         {/* CTA Button */}
-
-                        <form className="hidden sm:block" action="/logout" method="post" >
-                            <button
-                                type="submit"
-                                className="px-6 py-2 bg-gradient-to-r from-orange-700 to-yellow-600 text-white rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300"
-                            >
-                                Logout
-                            </button>
-                        </form>
-
+                        <button
+                            onClick={handleLogout}
+                            className="hidden sm:block px-6 py-2 rounded-full bg-gradient-to-r from-[#b8860b] to-[#c9a227] text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+                        >
+                            Logout
+                        </button>
 
                         {/* Mobile menu button */}
                         <div className="md:hidden">
                             <button
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                className="text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400"
+                                className="text-[#4a3f2c] hover:text-[#b8860b]"
                             >
                                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                             </button>
@@ -77,43 +73,24 @@ export default function NavBarAuth() {
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="md:hidden bg-white dark:bg-black border-t border-zinc-200 dark:border-zinc-800">
-                        <div className="px-4 pt-2 pb-4 space-y-2">
-
-                            <a
-                                href="/auth"
-                                className="block px-3 py-2 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
-                            >
-                                Home
-                            </a>
-                            <a
-                                href="/pastors"
-                                className="block px-3 py-2 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
-                            >
-                                Pastors
-                            </a>
-                            <a
-                                href="/events"
-                                className="block px-3 py-2 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
-                            >
-                                Events
-                            </a>
-                             <a
-                                href="/church"
-                                className="block px-3 py-2 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"
-                            >
-                                Churches
-                            </a>
-
-
-                            <form className="w-full" action="/logout" method="post" >
+                    <div className="md:hidden border-t border-[#e8dfca] bg-white/95">
+                        <div className="px-4 pt-2 pb-4 space-y-1">
+                            {links.map((link) => (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="block px-3 py-2 rounded-lg text-[#4a3f2c] hover:bg-[#f4ecdf]"
+                                >
+                                    {link.label}
+                                </a>
+                            ))}
                             <button
-                                type="submit"
-                                className="px-6 py-2 bg-gradient-to-r from-orange-700 to-yellow-600 text-white rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300"
+                                onClick={handleLogout}
+                                className="w-full mt-2 px-6 py-2 rounded-full bg-gradient-to-r from-[#b8860b] to-[#c9a227] text-white font-medium"
                             >
                                 Logout
                             </button>
-                        </form>
                         </div>
                     </div>
                 )}

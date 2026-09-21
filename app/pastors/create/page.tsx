@@ -1,15 +1,10 @@
-
 import NavBarAuth from "@/app/auth/components/nabvar";
-import { createClient } from "@/lib/supabaseServer";
+import { getCurrentUser } from "@/lib/appwriteServer";
 import { redirect } from "next/navigation";
 import AddPastorsForm from "../components/add-pastors";
 
-export default async function AddPastors(){
-     const supabase = await createClient();
-
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+export default async function AddPastors() {
+    const user = await getCurrentUser();
 
     if (!user) {
         redirect("/login");

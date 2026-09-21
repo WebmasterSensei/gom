@@ -1,157 +1,101 @@
-import { useState, useEffect } from "react";
-import { BookOpen, RefreshCw } from "lucide-react";
-import { BlurFadeText } from "./partials/blurfade";
+"use client";
 
-interface Verse {
-  text: string;
-  reference: string;
-}
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
+import Image from "next/image";
 
-export default function Verses() {
-  const [verse, setVerse] = useState<Verse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function DailyVerse() {
+  const root = useRef<HTMLElement>(null);
 
-  // Generate a consistent verse index based on the day of the year
-  const getDailyVerseIndex = () => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const diff = now.getTime() - start.getTime();
-    const oneDay = 1000 * 60 * 60 * 24;
-    const dayOfYear = Math.floor(diff / oneDay);
-    return dayOfYear;
-  };
-
-  const fetchVerse = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Using Bible API (bible-api.com) - free and no authentication required
-      const dailyIndex = getDailyVerseIndex();
-
-      // Array of popular verses that rotate daily
-      const verses = [
-        "john 3:16",
-        "philippians 4:13",
-        "jeremiah 29:11",
-        "romans 8:28",
-        "proverbs 3:5-6",
-        "matthew 6:33",
-        "isaiah 41:10",
-        "psalm 23:1-4",
-        "joshua 1:9",
-        "romans 12:2",
-        "galatians 5:22-23",
-        "ephesians 2:8-9",
-        "1 corinthians 13:4-7",
-        "matthew 5:14-16",
-        "psalm 46:1",
-        "proverbs 16:3",
-        "james 1:2-4",
-        "colossians 3:23",
-        "2 timothy 1:7",
-        "hebrews 11:1"
-      ];
-
-      const verseRef = verses[dailyIndex % verses.length];
-      const response = await fetch(`https://bible-api.com/${verseRef}`);
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch verse");
-      }
-
-      const data = await response.json();
-      setVerse({
-        text: data.text.trim() as string,
-        reference: data.reference
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        scrollTrigger: {
+          trigger: root.current,
+          start: "top 70%",
+        },
       });
-    } catch (err) {
-      setError("Unable to load verse. Please try again.");
-      console.error("Error fetching verse:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  useEffect(() => {
-    fetchVerse();
-  }, []);
+      tl.fromTo(
+        ".verse-over",
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.6 }
+      )
+        .fromTo(
+          ".verse-text",
+          { opacity: 0, y: 46 },
+          { opacity: 1, y: 0, duration: 1, stagger: 0.25 },
+          "-=0.35"
+        )
+        .fromTo(
+          ".verse-ref",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.8 },
+          "-=0.6"
+        );
+
+      // Parallax on imagery
+      gsap.fromTo(
+        ".verse-bg",
+        { yPercent: -8 },
+        {
+          yPercent: 8,
+          ease: "none",
+          scrollTrigger: {
+            trigger: root.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        }
+      );
+    },
+    { scope: root }
+  );
 
   return (
-    <div>
-         <h1 className="mb-6 text-center animate-fade-in pt-20">
-          <BlurFadeText title="Verse of the day" subtitle="Here are some verse thats makes your day" />
-        </h1>
-      <div className="min-h-screen flex items-center justify-center ">
-       
-        <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
-          {/* Left Column */}
-          <div className="md:col-span-1 flex flex-col items-center justify-center text-center p-6 rounded-2xl  shadow-lg">
-            <img
-              className="rounded-2xl"
-              src="/images/bib.jpg"
-              alt=""
-            />
-          </div>
-
-          {/* Right Column */}
-          <div className="md:col-span-2  p-8 md:p-12">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-bold text-gray-200">
-                  Daily Verse
-                </h1>
-              </div>
-              <button
-                onClick={fetchVerse}
-                disabled={loading}
-                className="p-2 rounded-full hover:bg-indigo-800 transition-colors disabled:opacity-50"
-                title="Refresh verse"
-              >
-                <RefreshCw
-                  className={`w-5 h-5 text-indigo-400 ${
-                    loading ? "animate-spin" : ""
-                  }`}
-                />
-              </button>
-            </div>
-
-            {/* Content */}
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="inline-block w-12 h-12 border-4 border-indigo-300 border-t-indigo-500 rounded-full animate-spin"></div>
-                <p className="mt-4 text-gray-400">Loading today's verse...</p>
-              </div>
-            ) : error ? (
-              <div className="text-center py-12">
-                <p className="text-red-500 mb-4">{error}</p>
-                <button
-                  onClick={fetchVerse}
-                  className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-                >
-                  Try Again
-                </button>
-              </div>
-            ) : verse ? (
-              <div className="space-y-6">
-                <blockquote className="text-xl md:text-2xl text-gray-300 leading-relaxed font-serif italic border-l-4 border-indigo-400 pl-6">
-                  "{verse?.text}"
-                </blockquote>
-                <p className="text-right text-lg font-semibold text-indigo-400">
-                  — {verse?.reference}
-                </p>
-                <div className="pt-6 border-t border-indigo-800">
-                  <p className="text-sm text-gray-400 text-center">
-                    This verse updates daily. Come back tomorrow for a new one!
-                  </p>
-                </div>
-              </div>
-            ) : null}
-          </div>
-        </div>d
+    <section
+      id="verse"
+      ref={root}
+      className="relative overflow-hidden bg-ink py-24 sm:py-32"
+    >
+      {/* Background imagery */}
+      <div className="pointer-events-none absolute inset-0">
+        <Image
+          src="/images/bible.jpg"
+          alt="An open Bible by candlelight"
+          fill
+          className="verse-bg object-cover opacity-25"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/80 to-ink"></div>
+        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/10 blur-3xl"></div>
       </div>
-    </div>
+
+      <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6">
+        <p className="verse-over text-xs font-semibold uppercase tracking-[0.4em] text-gold">
+          A Word for Today
+        </p>
+
+        <span className="verse-text mt-8 block font-serif text-7xl text-gold/80">
+          “
+        </span>
+
+        <p className="verse-text mt-2 font-serif text-3xl font-medium italic leading-snug text-cream sm:text-4xl">
+          For where two or three are gathered together in my name, there am I in
+          the midst of them.
+        </p>
+
+        <div className="mt-10 flex items-center justify-center gap-4">
+          <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold/60"></div>
+          <p className="verse-ref text-sm font-semibold uppercase tracking-[0.3em] text-gold sm:text-base">
+            Matthew 18:20
+          </p>
+          <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold/60"></div>
+        </div>
+      </div>
+    </section>
   );
 }

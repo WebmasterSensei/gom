@@ -1,99 +1,120 @@
-import { supabase } from "@/lib/supabaseClient";
-import { BlurFadeText } from "./partials/blurfade";
-import { useEffect, useState } from "react";
+"use client";
+
+import { Databases, Query } from "appwrite";
+import { useAppwrite } from "@appwrite.io/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
+import { appwriteConfig } from "@/lib/appwrite";
+import SectionHeading from "./partials/section-heading";
+
+interface PastorDoc {
+  $id: string;
+  name: string;
+  rank: string;
+  address: string;
+  startdate: string;
+  image: string;
+}
 
 export default function Pastors() {
-  const [pastors, setPastors] = useState<any[]>([]);
+  const { client } = useAppwrite();
+  const databases = useMemo(() => new Databases(client), [client]);
+  const root = useRef<HTMLElement>(null);
 
-  const fetchEvents = async () => {
-    const { data, error } = await supabase.from("pastors").select("*");
-    console.log(data);
-    if (error) console.error("Error fetching users:", error);
-    else setPastors(data || []);
-  };
+  const [pastors, setPastors] = useState<PastorDoc[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    databases
+      .listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.pastorsCollectionId,
+        [Query.equal("status", ["Active"]), Query.orderAsc("$createdAt")]
+      )
+      .then((res) => setPastors(res.documents as unknown as PastorDoc[]))
+      .catch((err) => console.error("Failed to load pastors:", err))
+      .finally(() => setLoading(false));
+  }, [databases]);
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        ".pastor-card",
+        { opacity: 0, y: 44 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: { trigger: root.current, start: "top 78%" },
+        }
+      );
+    },
+    { scope: root }
+  );
 
   return (
-    <>
-      <div className="min-h-screen py-20" id="pastors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Title Section */}
-          <div className="text-center mb-20">
-            <h1 className="mb-6 text-center animate-fade-in">
-              <BlurFadeText title="Leaderships" subtitle="Meet our pastors" />
-            </h1>
+    <section id="pastors" ref={root} className="bg-cream py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          overline="Godly Leadership"
+          title="Our Pastors"
+          subtitle="Servants of the Word, shepherding the flock with wisdom, humility, and love."
+        />
 
-            <div className="flex justify-center items-center gap-4 mt-6">
-              <span className="text-blue-400 text-xl">📖</span>
-              <span className="text-green-600 text-xl">✝️</span>
-              <span className="text-orange-500 text-xl">🙏</span>
-              <span className="text-gray-400 text-xl">🕊️</span>
-            </div>
-          </div>
-
-          {/* Team Grid */}
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
-            {pastors.map((member, index) => (
-              <div key={index} className="text-center group">
-                <div className="relative mb-6 inline-block">
-                  <div
-                    style={{
-                      backgroundImage: `url(${member?.image})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      backgroundRepeat: "no-repeat"
-                    }}
-                    className={`relative w-20 h-20 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full flex flex-col items-center justify-center mx-auto 
-              group-hover:scale-110 transition-all duration-700 border-4 
-              ${member?.borderColor} group-hover:shadow-2xl ${member?.glowColor}`}
-                  >
-                    {/* Overlay gradient layers */}
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/40 to-transparent"></div>
-                    <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.3),transparent_50%)]"></div>
-                  </div>
-                </div>
-
-                <h3
-                  className="text-[12px] sm:text-xl md:text-2xl font-bold text-amber-100 mb-2"
-                  style={{ fontFamily: "serif" }}
+        {loading ? (
+          <p className="mt-14 text-center text-sm text-muted-warm">Loading pastors…</p>
+        ) : pastors.length === 0 ? (
+          <p className="mt-14 text-center text-sm text-muted-warm">
+            Pastor profiles are being prepared.
+          </p>
+        ) : (
+          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {pastors.map((pastor) => {
+              const img = pastor.image || null;
+              return (
+                <article
+                  key={pastor.$id}
+                  className="pastor-card group overflow-hidden rounded-2xl border border-sand bg-white text-center shadow-sm transition hover:-translate-y-1.5 hover:shadow-xl"
                 >
-                  {member?.name}
-                </h3>
-                <p className="font-bold text-[10px] sm:text-base mb-1 tracking-wide text-white">
-                  {member?.rank}
-                </p>
-                <p className="text-gray-200 text-[9px] sm:text-sm tracking-wider">
-                  {member?.address}
-                </p>
-                <p className="text-gray-300 text-[9px] sm:text-[12px] tracking-wider">
-                  Since:{" "}
-                  {member?.startdate
-                    ? new Date(member.startdate).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric"
-                      })
-                    : ""}
-                </p>
-              </div>
-            ))}
+                  <div className="relative mx-auto mt-8 h-36 w-36 overflow-hidden rounded-full border-4 border-gold/30 shadow-lg transition group-hover:border-gold/60">
+                    {img ? (
+                      <img
+                        src={img}
+                        alt={pastor.name || "Pastor"}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gold/25 to-burgundy/20 font-serif text-4xl font-semibold text-gold-deep">
+                        {(pastor.name || "?").charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-serif text-2xl font-semibold text-ink">
+                      {pastor.name}
+                    </h3>
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold-deep">
+                      {pastor.rank || "Minister"}
+                    </p>
+                    <div className="mx-auto mt-4 h-px w-16 bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
+                    <p className="mt-4 text-sm leading-relaxed text-muted-warm">
+                      {pastor.address || "Serving faithfully in the ministry of God's Oracle."}
+                    </p>
+                    {pastor.startdate && (
+                      <p className="mt-2 text-xs font-medium text-ink-soft">
+                        Serving since {new Date(pastor.startdate).toLocaleDateString("en-US", { year: "numeric" })}
+                      </p>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
           </div>
-
-          {/* Bottom decoration */}
-          <div className="flex justify-center mt-20">
-            <div className="flex items-center gap-3">
-              <div className="w-24 h-px bg-gradient-to-r from-transparent to-amber-500/50"></div>
-              <div className="text-amber-500/50 text-sm tracking-widest">
-                ◆ ◆ ◆
-              </div>
-              <div className="w-24 h-px bg-gradient-to-l from-transparent to-amber-500/50"></div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
-    </>
+    </section>
   );
 }
