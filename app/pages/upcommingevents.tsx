@@ -37,7 +37,7 @@ export default function UpcomingEvents() {
           <h1 className="mb-6 text-center animate-fade-in">
             <BlurFadeText
               title="Upcoming Events"
-              subtitle="View Our Upcoming Events"
+              subtitle="View Our Upcoming Eventsss"
             />
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">

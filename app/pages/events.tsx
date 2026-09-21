@@ -46,7 +46,7 @@ export default function Gallery() {
       {events.length <= 0 ? (<>
         <div className="text-center mb-8">
           <h1 className="mb-6 text-center animate-fade-in">
-            <BlurFadeText title="Past Events" subtitle="No Past Events" />
+            <BlurFadeText title="Past Events" subtitle="No Past Eventsssss" />
           </h1>
         </div>
       </>) : (<>

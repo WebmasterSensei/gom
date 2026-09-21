@@ -150,7 +150,7 @@ export default function Verses() {
               </div>
             ) : null}
           </div>
-        </div>
+        </div>d
       </div>
     </div>
   );
