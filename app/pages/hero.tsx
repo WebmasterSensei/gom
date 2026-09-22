@@ -1,13 +1,35 @@
 "use client";
 
-import { CalendarHeart, Sparkles, ChevronDown } from "lucide-react";
-import { useRef } from "react";
+import {
+  CalendarHeart,
+  Sparkles,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import Image from "next/image";
+import { AnimatePresence, motion } from "motion/react";
+
+const slides = [
+  { src: "/images/bible.jpg", alt: "An open Bible by candlelight" },
+  { src: "/events/image.jpg", alt: "God's Oracle Ministries gathering" },
+];
 
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [paused]);
 
   useGSAP(
     () => {
@@ -53,19 +75,9 @@ export default function Hero() {
             "-=0.4"
           );
 
-        // Gentle parallax on ornaments
-        gsap.to(".hero-orb-a", {
-          yPercent: 22,
-          ease: "none",
-          scrollTrigger: {
-            trigger: root.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-        gsap.to(".hero-orb-b", {
-          yPercent: -18,
+        // Gentle parallax on the carousel
+        gsap.to(".hero-carousel", {
+          yPercent: 12,
           ease: "none",
           scrollTrigger: {
             trigger: root.current,
@@ -84,22 +96,68 @@ export default function Hero() {
     <section
       id="hero"
       ref={root}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-cream"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-ink"
     >
-      {/* Decorative background */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="hero-orb-a absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-gold/15 blur-3xl"></div>
-        <div className="hero-orb-b absolute -right-24 bottom-1/4 h-96 w-96 rounded-full bg-burgundy/10 blur-3xl"></div>
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/60 to-transparent"></div>
+      {/* Carousel background */}
+      <div
+        className="hero-carousel absolute inset-0"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        <div className="relative h-full w-full">
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={slides[index].src}
+              initial={{ opacity: 0, scale: 1.08 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ opacity: { duration: 1.2, ease: "easeInOut" }, scale: { duration: 6, ease: "linear" } }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={slides[index].src}
+                alt={slides[index].alt}
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover"
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-        {/* Subtle arched grid */}
-        <div
-          className="absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 50% 100%, transparent 58%, rgba(201,162,39,0.10) 59%, rgba(201,162,39,0.10) 59.5%, transparent 60%), radial-gradient(circle at 50% 100%, transparent 66%, rgba(125,46,61,0.08) 67%, rgba(125,46,61,0.08) 67.5%, transparent 68%)",
-          }}
-        ></div>
+        {/* Readability overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/45 to-ink/75"></div>
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/40 to-transparent"></div>
+      </div>
+
+      {/* Carousel controls */}
+      <button
+        aria-label="Previous image"
+        onClick={() => setIndex((prev) => (prev - 1 + slides.length) % slides.length)}
+        className="absolute left-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full border border-white/25 bg-white/10 p-2 text-cream backdrop-blur transition hover:bg-white/25 sm:block"
+      >
+        <ChevronLeft size={20} />
+      </button>
+      <button
+        aria-label="Next image"
+        onClick={() => setIndex((prev) => (prev + 1) % slides.length)}
+        className="absolute right-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full border border-white/25 bg-white/10 p-2 text-cream backdrop-blur transition hover:bg-white/25 sm:block"
+      >
+        <ChevronRight size={20} />
+      </button>
+
+      <div className="absolute bottom-20 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2.5">
+        {slides.map((slide, i) => (
+          <button
+            key={slide.src}
+            aria-label={`Show slide ${i + 1}`}
+            onClick={() => setIndex(i)}
+            className={`h-2 rounded-full transition-all ${
+              i === index ? "w-6 bg-gold" : "w-2 bg-white/50 hover:bg-white/80"
+            }`}
+          />
+        ))}
       </div>
 
       {/* Content */}
@@ -123,16 +181,16 @@ export default function Hero() {
           </div>
         </div>
 
-        <h1 className="mt-8 font-serif font-semibold leading-[1.05] text-ink">
+        <h1 className="mt-8 font-serif font-semibold leading-[1.05] text-cream">
           <span className="hero-title-line block text-5xl sm:text-7xl">
             God&apos;s Oracle
           </span>
-          <span className="hero-title-line block text-3xl italic text-gold-deep sm:text-5xl">
+          <span className="hero-title-line block text-3xl italic text-gold sm:text-5xl">
             Ministries
           </span>
         </h1>
 
-        <p className="hero-sub mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-warm sm:text-lg">
+        <p className="hero-sub mx-auto mt-6 max-w-2xl text-base leading-relaxed text-cream/90 sm:text-lg">
           A sanctuary of worship where every soul is welcomed, every heart is
           restored, and the living Word is proclaimed — glorifying God and
           serving our community with love.
@@ -148,7 +206,7 @@ export default function Hero() {
           </a>
           <a
             href="#aboutus"
-            className="hero-cta inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white/80 px-8 py-3.5 text-sm font-semibold text-ink backdrop-blur transition hover:border-gold hover:text-gold-deep"
+            className="hero-cta inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-8 py-3.5 text-sm font-semibold text-cream backdrop-blur transition hover:border-gold hover:text-gold"
           >
             Discover Us
           </a>
@@ -156,7 +214,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll cue */}
-      <div className="hero-cue absolute bottom-8 left-1/2 -translate-x-1/2 text-gold-deep">
+      <div className="hero-cue absolute bottom-8 left-1/2 -translate-x-1/2 text-gold">
         <a href="#verse" aria-label="Scroll down" className="flex flex-col items-center gap-1">
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em]">
             Scroll

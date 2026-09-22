@@ -72,6 +72,7 @@ const COLLECTIONS = {
   pastors: "pastors",
   churches: "churches",
   contact: "contact",
+  donations: "donations",
 };
 
 const BUCKETS = {
@@ -124,16 +125,30 @@ async function ensureAttributes(databaseId, collectionId, attrs) {
   for (const attr of attrs) {
     if (keys.has(attr.key)) continue;
     try {
-      await databases[attr.type](
-        databaseId,
-        collectionId,
-        attr.key,
-        attr.size,
-        attr.required,
-        attr.default,
-        attr.array,
-        attr.encrypt
-      );
+      if (attr.type === "createIntegerAttribute") {
+        await databases.createIntegerAttribute(
+          databaseId,
+          collectionId,
+          attr.key,
+          attr.required,
+          attr.min ?? undefined,
+          attr.max ?? undefined,
+          attr.default,
+          attr.array,
+          attr.encrypt
+        );
+      } else {
+        await databases[attr.type](
+          databaseId,
+          collectionId,
+          attr.key,
+          attr.size,
+          attr.required,
+          attr.default,
+          attr.array,
+          attr.encrypt
+        );
+      }
       created.push(attr.key);
     } catch (error) {
       if (error?.code !== 409) throw error;
@@ -219,6 +234,27 @@ const schema = {
       { key: "email", type: "createStringAttribute", size: 255, required: true },
       { key: "phone", type: "createStringAttribute", size: 64, required: false },
       { key: "message", type: "createStringAttribute", size: 8192, required: true },
+      { key: "createdAt", type: "createDatetimeAttribute", size: null, required: true },
+    ],
+  },
+  [COLLECTIONS.donations]: {
+    permissions: [
+      Permission.read(Role.users()),
+      Permission.create(Role.any()),
+      Permission.update(Role.users()),
+      Permission.delete(Role.users()),
+    ],
+    attributes: [
+      { key: "name", type: "createStringAttribute", size: 255, required: false },
+      { key: "email", type: "createStringAttribute", size: 255, required: false },
+      { key: "phone", type: "createStringAttribute", size: 64, required: false },
+      { key: "amount", type: "createIntegerAttribute", required: true, min: 100, max: 10000000 },
+      { key: "currency", type: "createStringAttribute", size: 8, required: false, default: "PHP" },
+      { key: "wallet", type: "createStringAttribute", size: 32, required: true },
+      { key: "note", type: "createStringAttribute", size: 2048, required: false },
+      { key: "intentId", type: "createStringAttribute", size: 255, required: true },
+      { key: "paymentId", type: "createStringAttribute", size: 255, required: false },
+      { key: "status", type: "createStringAttribute", size: 32, required: false, default: "pending" },
       { key: "createdAt", type: "createDatetimeAttribute", size: null, required: true },
     ],
   },

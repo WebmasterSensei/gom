@@ -23,7 +23,7 @@ export default function NavBarAuth() {
         { href: "/pastors", label: "Pastors" },
         { href: "/events", label: "Events" },
         { href: "/church", label: "Churches" },
-        { href: "/", label: "Web" },
+        // { href: "/", label: "Web" },
     ];
 
     const linkClass =
