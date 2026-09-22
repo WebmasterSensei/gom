@@ -5,16 +5,35 @@ import { useAppwrite } from "@appwrite.io/react";
 import { Databases, ID } from "appwrite";
 import { appwriteConfig } from "@/lib/appwrite";
 
-export default function AddChurhForm() {
+type ChurchStatus = "Active" | "Inactive" | "Pending";
+
+interface AddChurchProps {
+  documentId?: string;
+  initialData?: {
+    name: string;
+    address: string;
+    desc: string;
+    map: string;
+    status: ChurchStatus;
+  };
+  onComplete?: () => void;
+}
+
+export default function AddChurhForm({
+  documentId,
+  initialData,
+  onComplete,
+}: AddChurchProps) {
   const { client } = useAppwrite()
   const databases = new Databases(client)
 
   const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    desc: "",
-    map: ""
+    name: initialData?.name || "",
+    address: initialData?.address || "",
+    desc: initialData?.desc || "",
+    map: initialData?.map || ""
   });
+  const [status, setStatus] = useState<ChurchStatus>(initialData?.status || "Active");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -29,21 +48,37 @@ export default function AddChurhForm() {
     setMessage("");
 
     try {
-      await databases.createDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.churchesCollectionId,
-        ID.unique(),
-        {
-          name: formData.name,
-          address: formData.address,
-          desc: formData.desc,
-          map: formData.map,
-          status: "Active",
-        }
-      );
+      if (documentId) {
+        await databases.updateDocument(
+          appwriteConfig.databaseId,
+          appwriteConfig.churchesCollectionId,
+          documentId,
+          {
+            name: formData.name,
+            address: formData.address,
+            desc: formData.desc,
+            map: formData.map,
+            status,
+          }
+        );
+      } else {
+        await databases.createDocument(
+          appwriteConfig.databaseId,
+          appwriteConfig.churchesCollectionId,
+          ID.unique(),
+          {
+            name: formData.name,
+            address: formData.address,
+            desc: formData.desc,
+            map: formData.map,
+            status: "Active",
+          }
+        );
+      }
 
-      setMessage("✅ Church added successfully!");
+      setMessage(documentId ? "✅ Church updated successfully!" : "✅ Church added successfully!");
       setFormData({ name: "", address: "", desc: "", map: "" });
+      if (onComplete) onComplete();
     } catch (err: unknown) {
       console.error("Error:", err);
       setMessage("❌ Error: " + (err instanceof Error ? err.message : String(err)));
@@ -62,7 +97,7 @@ export default function AddChurhForm() {
         className="space-y-5 max-w-xl md:max-w-3xl lg:max-w-4xl mx-auto bg-white rounded-2xl border border-[#ece3cd] shadow-[0_20px_50px_-20px_rgba(99,70,20,0.25)] p-6 sm:p-10"
       >
         <h2 className="text-2xl sm:text-3xl font-serif font-semibold text-center text-[#33281a] mb-2">
-          Add Church
+          {documentId ? "Edit Church" : "Add Church"}
         </h2>
         <div className="mx-auto mb-6 h-px w-20 bg-gradient-to-r from-transparent via-[#c9a227] to-transparent"></div>
 
@@ -92,12 +127,27 @@ export default function AddChurhForm() {
           <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">Map Embed URL</label>
           <input type="text" name="map" placeholder="Enter Map Embed URL" value={formData.map} onChange={handleChange} required className={inputClass} />
         </div>
+
+        <div>
+          <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">Status</label>
+          <select
+            name="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as ChurchStatus)}
+            className={inputClass}
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+
         <button
           type="submit"
           disabled={loading}
           className="flex items-center justify-center w-full bg-gradient-to-r from-[#b8860b] to-[#c9a227] hover:from-[#a37408] hover:to-[#b8860b] text-white font-medium text-[15px] px-4 py-3 rounded-lg shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Adding..." : "Add Church"}
+          {loading ? (documentId ? "Updating..." : "Adding...") : (documentId ? "Update Church" : "Add Church")}
         </button>
       </form>
     </section>

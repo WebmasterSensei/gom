@@ -5,17 +5,47 @@ import { useAppwrite } from "@appwrite.io/react";
 import { Databases, Storage, ID, Permission, Role } from "appwrite";
 import { appwriteConfig } from "@/lib/appwrite";
 
-export default function AddPastorsForm() {
+type PastorStatus = "Active" | "Inactive" | "Pending";
+
+interface AddPastorProps {
+  documentId?: string;
+  initialData?: {
+    name: string;
+    address: string;
+    rank: string;
+    startdate: string;
+    image: string;
+    status: PastorStatus;
+  };
+  onComplete?: () => void;
+}
+
+const toDateInputValue = (value?: string) => {
+  if (!value) return "";
+  const d = new Date(value);
+  if (isNaN(d.getTime())) return "";
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
+
+export default function AddPastorsForm({
+  documentId,
+  initialData,
+  onComplete,
+}: AddPastorProps) {
   const { client } = useAppwrite();
   const databases = new Databases(client);
   const storage = new Storage(client);
 
   const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    rank: "",
-    startdate: ""
+    name: initialData?.name || "",
+    address: initialData?.address || "",
+    rank: initialData?.rank || "",
+    startdate: toDateInputValue(initialData?.startdate)
   });
+  const [status, setStatus] = useState<PastorStatus>(initialData?.status || "Active");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -55,23 +85,40 @@ export default function AddPastorsForm() {
           .toString();
       }
 
-      await databases.createDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.pastorsCollectionId,
-        ID.unique(),
-        {
-          name: formData.name,
-          address: formData.address,
-          rank: formData.rank,
-          startdate: formData.startdate,
-          image: imageUrl,
-          status: "Active"
-        }
-      );
+      if (documentId) {
+        await databases.updateDocument(
+          appwriteConfig.databaseId,
+          appwriteConfig.pastorsCollectionId,
+          documentId,
+          {
+            name: formData.name,
+            address: formData.address,
+            rank: formData.rank,
+            startdate: formData.startdate,
+            image: imageUrl || initialData?.image || "",
+            status
+          }
+        );
+      } else {
+        await databases.createDocument(
+          appwriteConfig.databaseId,
+          appwriteConfig.pastorsCollectionId,
+          ID.unique(),
+          {
+            name: formData.name,
+            address: formData.address,
+            rank: formData.rank,
+            startdate: formData.startdate,
+            image: imageUrl,
+            status: "Active"
+          }
+        );
+      }
 
-      setMessage("✅ Pastor added successfully!");
+      setMessage(documentId ? "✅ Pastor updated successfully!" : "✅ Pastor added successfully!");
       setFormData({ name: "", address: "", rank: "", startdate: "" });
       setImageFile(null);
+      if (onComplete) onComplete();
     } catch (err: unknown) {
       console.error("Upload Error:", err);
       setMessage(
@@ -92,7 +139,7 @@ export default function AddPastorsForm() {
         className="space-y-5 max-w-xl md:max-w-3xl lg:max-w-4xl mx-auto bg-white rounded-2xl border border-[#ece3cd] shadow-[0_20px_50px_-20px_rgba(99,70,20,0.25)] p-6 sm:p-10"
       >
         <h2 className="text-2xl sm:text-3xl font-serif font-semibold text-center text-[#33281a] mb-2">
-          Add Pastor
+          {documentId ? "Edit Pastor" : "Add Pastor"}
         </h2>
         <div className="mx-auto mb-6 h-px w-20 bg-gradient-to-r from-transparent via-[#c9a227] to-transparent"></div>
 
@@ -162,6 +209,22 @@ export default function AddPastorsForm() {
 
         <div>
           <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+            Status
+          </label>
+          <select
+            name="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as PastorStatus)}
+            className={inputClass}
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
             Upload Image
           </label>
           <input
@@ -182,7 +245,7 @@ export default function AddPastorsForm() {
           disabled={loading}
           className="flex items-center justify-center w-full bg-gradient-to-r from-[#b8860b] to-[#c9a227] hover:from-[#a37408] hover:to-[#b8860b] text-white font-medium text-[15px] px-4 py-3 rounded-lg shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Adding..." : "Add Pastor"}
+          {loading ? (documentId ? "Updating..." : "Adding...") : (documentId ? "Update Pastor" : "Add Pastor")}
         </button>
       </form>
     </section>

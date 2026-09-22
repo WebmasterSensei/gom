@@ -3,6 +3,7 @@ import { useAppwrite } from '@appwrite.io/react';
 import { Databases, Query } from 'appwrite';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { appwriteConfig } from '@/lib/appwrite';
+import AddEventComponent from './add-events';
 
 type EventStatus = 'Active' | 'Inactive' | 'Pending';
 
@@ -14,6 +15,8 @@ interface EventDoc {
     date: string;
     gspeaker: string;
     tag: string;
+    starttime: string;
+    endtime: string;
     image: string;
     status: EventStatus;
 }
@@ -25,6 +28,7 @@ export default function EventAdmin() {
     const databases = useMemo(() => new Databases(client), [client])
 
     const [events, setevents] = useState<EventDoc[]>([]);
+    const [editingDoc, setEditingDoc] = useState<EventDoc | null>(null);
 
     const fetchEvents = useCallback(async () => {
         try {
@@ -101,6 +105,7 @@ export default function EventAdmin() {
     };
 
     const handleDelete = async (documentId: string) => {
+        if (!confirm("Are you sure you want to delete this event?")) return;
         try {
             await databases.deleteDocument(
                 appwriteConfig.databaseId,
@@ -173,6 +178,30 @@ export default function EventAdmin() {
                     </div>
                 </div>
 
+                {editingDoc && (
+                    <div className="mb-6">
+                        <div className="flex items-center justify-between bg-white rounded-xl border border-[#ece3cd] p-4 mb-4">
+                            <div>
+                                <h2 className="font-serif text-lg font-semibold text-[#33281a]">
+                                    Editing: {editingDoc.title}
+                                </h2>
+                                <p className="text-sm text-[#7c6f5a]">Update the details below, then save your changes.</p>
+                            </div>
+                            <button
+                                onClick={() => setEditingDoc(null)}
+                                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-[#e2d8c2] text-[#4a3f2c] bg-white hover:bg-[#f4ecdf] transition"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                        <AddEventComponent
+                            documentId={editingDoc.$id}
+                            initialData={editingDoc}
+                            onComplete={() => setEditingDoc(null)}
+                        />
+                    </div>
+                )}
+
                 {/* Table */}
                 <div className="bg-white shadow-sm rounded-xl border border-[#ece3cd] overflow-hidden">
                     <div className="hidden lg:block overflow-x-auto">
@@ -227,6 +256,12 @@ export default function EventAdmin() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <button
+                                                onClick={() => setEditingDoc(event)}
+                                                className="text-[#8a6d1a] hover:text-[#a37408] mr-3"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
                                                 onClick={() => handleDelete(event.$id)}
                                                 className="text-[#7d2e3d] hover:text-[#a33b4d]"
                                             >
@@ -276,6 +311,12 @@ export default function EventAdmin() {
                                 </div>
 
                                 <div className="mt-4 flex justify-end space-x-2">
+                                    <button
+                                        onClick={() => setEditingDoc(event)}
+                                        className="text-[#8a6d1a] hover:text-[#a37408]"
+                                    >
+                                        Edit
+                                    </button>
                                     <button
                                         onClick={() => handleDelete(event.$id)}
                                         className="text-[#7d2e3d] hover:text-[#a33b4d]"

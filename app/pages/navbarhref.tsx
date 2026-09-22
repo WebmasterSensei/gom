@@ -14,7 +14,7 @@ const links = [
   { href: "/#upcoming", label: "Upcoming" },
   { href: "/#pastors", label: "Pastors" },
   { href: "/#churches", label: "Churches" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" }
 ];
 
 function usePrefersReducedMotion() {
@@ -33,7 +33,11 @@ export default function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeHref, setActiveHref] = useState("#hero");
-  const [indicator, setIndicator] = useState({ left: 0, width: 0, ready: false });
+  const [indicator, setIndicator] = useState({
+    left: 0,
+    width: 0,
+    ready: false
+  });
 
   const navRef = useRef<HTMLElement>(null);
   const ribbonRef = useRef<HTMLDivElement>(null);
@@ -64,13 +68,21 @@ export default function NavBar() {
         opacity: y > 80 ? 0 : 1,
         duration: 0.3,
         ease: "power2.out",
-        overwrite: true,
+        overwrite: true
       });
 
       if (y > lastY.current && y > 180) {
-        gsap.to(navRef.current, { yPercent: -100, duration: 0.35, ease: "power2.out" });
+        gsap.to(navRef.current, {
+          yPercent: -100,
+          duration: 0.35,
+          ease: "power2.out"
+        });
       } else {
-        gsap.to(navRef.current, { yPercent: 0, duration: 0.35, ease: "power2.out" });
+        gsap.to(navRef.current, {
+          yPercent: 0,
+          duration: 0.35,
+          ease: "power2.out"
+        });
       }
       lastY.current = y;
     };
@@ -80,24 +92,39 @@ export default function NavBar() {
   }, [reducedMotion]);
 
   // Track which section is in view so the nav can point at it
+  // Track which section is in view so the nav can point at it
   useEffect(() => {
     const sections = links
-      .map((l) => document.querySelector(l.href))
-      .filter((el): el is Element => Boolean(el));
+      .map((link) => {
+        const hash = link.href.split("#")[1];
+        return hash ? document.getElementById(hash) : null;
+      })
+      .filter((el): el is HTMLElement => Boolean(el));
 
     if (!sections.length) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const mostVisible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (mostVisible?.target.id) setActiveHref(`#${mostVisible.target.id}`);
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+
+        if (!visibleEntries.length) return;
+
+        const mostVisible = visibleEntries.sort(
+          (a, b) => b.intersectionRatio - a.intersectionRatio
+        )[0];
+
+        if (mostVisible?.target.id) {
+          setActiveHref(`#${mostVisible.target.id}`);
+        }
       },
-      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+      {
+        rootMargin: "-45% 0px -45% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      }
     );
 
-    sections.forEach((s) => observer.observe(s));
+    sections.forEach((section) => observer.observe(section));
+
     return () => observer.disconnect();
   }, []);
 
@@ -109,7 +136,11 @@ export default function NavBar() {
       if (!el || !row) return;
       const elRect = el.getBoundingClientRect();
       const rowRect = row.getBoundingClientRect();
-      setIndicator({ left: elRect.left - rowRect.left, width: elRect.width, ready: true });
+      setIndicator({
+        left: elRect.left - rowRect.left,
+        width: elRect.width,
+        ready: true
+      });
     };
     measure();
     window.addEventListener("resize", measure);
@@ -141,13 +172,18 @@ export default function NavBar() {
         ref={navRef}
         className={cn(
           "border-b border-sand bg-cream/90 backdrop-blur-md transition-shadow duration-300",
-          scrolled ? "shadow-[0_10px_40px_-15px_rgba(99,70,20,0.25)]" : "shadow-none"
+          scrolled
+            ? "shadow-[0_10px_40px_-15px_rgba(99,70,20,0.25)]"
+            : "shadow-none"
         )}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <a href="#hero" className="group flex shrink-0 items-center gap-2.5">
+            <a
+              href="#hero"
+              className="group flex shrink-0 items-center gap-2.5"
+            >
               <span className="relative block">
                 <Image
                   src="/images/gomlogo.png"
@@ -162,12 +198,17 @@ export default function NavBar() {
                 <span className="font-serif text-lg font-semibold leading-none text-ink">
                   God&apos;s Oracle
                 </span>
-                <span className="text-[10px] font-medium text-gold-deep">Ministries</span>
+                <span className="text-[10px] font-medium text-gold-deep">
+                  Ministries
+                </span>
               </span>
             </a>
 
             {/* Desktop Navigation */}
-            <div ref={linkRowRef} className="relative hidden items-center gap-6 lg:flex">
+            <div
+              ref={linkRowRef}
+              className="relative hidden items-center gap-6 lg:flex"
+            >
               {links.map((link) => (
                 <a
                   key={link.href}
@@ -223,7 +264,10 @@ export default function NavBar() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div ref={menuRef} className="border-t border-sand bg-cream/95 lg:hidden">
+          <div
+            ref={menuRef}
+            className="border-t border-sand bg-cream/95 lg:hidden"
+          >
             <div className="space-y-0.5 px-4 pb-5 pt-2">
               {links.map((link) => (
                 <a
