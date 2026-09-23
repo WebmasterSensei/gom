@@ -34,39 +34,39 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-[#faf7f0] via-[#f4ecdf] to-[#efe4d3] px-4">
-      {/* Decorative gold glows */}
-      <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-[#c9a227]/20 blur-3xl"></div>
-      <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-[#7d2e3d]/15 blur-3xl"></div>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4">
+      {/* Decorative liquid glows */}
+      <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-gold/20 blur-3xl"></div>
+      <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-burgundy/20 blur-3xl"></div>
 
       <div className="relative w-full max-w-md">
-        <div className="overflow-hidden rounded-[1.75rem] border border-[#e5dcc8] bg-white/80 p-8 shadow-[0_30px_60px_-15px_rgba(99,70,20,0.25)] backdrop-blur-lg sm:p-10">
+        <div className="glass-panel overflow-hidden rounded-[1.75rem] p-8 sm:p-10">
           <div className="mb-8 text-center">
             <Image
               src="/images/gomlogo.png"
               alt="God's Oracle Ministries logo"
               width={84}
               height={84}
-              className="mx-auto mb-4 rounded-full border-2 border-[#d8c48a] object-cover shadow-md"
+              className="mx-auto mb-4 rounded-full border-2 border-gold/50 object-cover shadow-md"
             />
-            <h1 className="font-serif text-3xl font-semibold text-[#33281a]">
+            <h1 className="font-serif text-3xl font-semibold text-cream">
               Welcome Back
             </h1>
-            <p className="mt-1 text-sm text-[#7c6f5a]">
+            <p className="mt-1 text-sm text-cream/60">
               Sign in to minister &amp; manage God&apos;s work
             </p>
-            <div className="mx-auto mt-4 h-px w-16 bg-gradient-to-r from-transparent via-[#c9a227] to-transparent"></div>
+            <div className="mx-auto mt-4 h-px w-16 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
           </div>
 
           {error && (
-            <div className="mb-5 rounded-xl border border-[#d3a4ab] bg-[#7d2e3d]/10 px-4 py-3 text-sm text-[#7d2e3d]">
+            <div className="mb-5 rounded-xl border border-burgundy/40 bg-burgundy/15 px-4 py-3 text-sm text-[#f2b3c6]">
               {error}
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-[#4a3f2c]">
+              <label htmlFor="email" className="text-sm font-medium text-cream/85">
                 Email
               </label>
               <input
@@ -76,12 +76,12 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full rounded-xl border border-[#e2d8c2] bg-[#fbf8f1] px-4 py-3 text-[#33281a] placeholder-[#b3a68a] transition focus:border-[#c9a227] focus:outline-none focus:ring-2 focus:ring-[#c9a227]/30"
+                className="input-glass"
               />
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium text-[#4a3f2c]">
+              <label htmlFor="password" className="text-sm font-medium text-cream/85">
                 Password
               </label>
               <input
@@ -91,14 +91,14 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full rounded-xl border border-[#e2d8c2] bg-[#fbf8f1] px-4 py-3 text-[#33281a] placeholder-[#b3a68a] transition focus:border-[#c9a227] focus:outline-none focus:ring-2 focus:ring-[#c9a227]/30"
+                className="input-glass"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-gradient-to-r from-[#b8860b] to-[#c9a227] py-3 font-semibold text-white shadow-lg transition hover:from-[#a37408] hover:to-[#b8860b] focus:outline-none focus:ring-2 focus:ring-[#c9a227]/50 disabled:cursor-not-allowed disabled:opacity-60"
+              className="btn-gold w-full py-3 shadow-[0_20px_40px_-14px_rgba(184,134,11,0.7)] disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -128,7 +128,7 @@ export default function LoginPage() {
 
           <Link
             href="/"
-            className="mt-6 block text-center text-sm text-[#8a7a5c] underline-offset-4 transition hover:text-[#7d2e3d] hover:underline"
+            className="mt-6 block text-center text-sm text-cream/60 underline-offset-4 transition hover:text-gold hover:underline"
           >
             ← Back to website
           </Link>

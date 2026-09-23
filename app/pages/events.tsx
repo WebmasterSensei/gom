@@ -83,7 +83,7 @@ export default function Events() {
   };
 
   return (
-    <section id="events" ref={root} className="bg-cream-dark/60 py-24 sm:py-32">
+    <section id="events" ref={root} className="bg-transparent py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           overline="Lately in the House"
@@ -92,9 +92,9 @@ export default function Events() {
         />
 
         {loading ? (
-          <p className="mt-14 text-center text-sm text-muted-warm">Loading gatherings…</p>
+          <p className="mt-14 text-center text-sm text-cream/60">Loading gatherings…</p>
         ) : events.length === 0 ? (
-          <p className="mt-14 text-center text-sm text-muted-warm">
+          <p className="mt-14 text-center text-sm text-cream/60">
             Recent service highlights are being prepared.
           </p>
         ) : (
@@ -105,7 +105,7 @@ export default function Events() {
               return (
                 <article
                   key={event.$id}
-                  className="event-card group overflow-hidden rounded-2xl border border-sand bg-white shadow-sm transition hover:-translate-y-1.5 hover:shadow-xl"
+                  className="event-card group glass-panel overflow-hidden transition hover:-translate-y-1.5 hover:shadow-[0_36px_80px_-28px_rgba(0,0,0,0.7)]"
                 >
                   <div className="relative h-48 overflow-hidden">
                     {img ? (
@@ -116,32 +116,32 @@ export default function Events() {
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gold/25 to-burgundy/20">
-                        <CalendarDays className="text-gold-deep" size={40} />
+                        <CalendarDays className="text-gold" size={40} />
                       </div>
                     )}
-                    <div className="absolute left-4 top-4 flex flex-col items-center rounded-xl bg-white/95 px-3 py-1.5 shadow-md backdrop-blur">
-                      <span className="font-serif text-xl font-semibold leading-none text-gold-deep">
+                    <div className="glass-chip absolute left-4 top-4 flex flex-col items-center rounded-xl px-3 py-1.5">
+                      <span className="font-serif text-xl font-semibold leading-none text-gold">
                         {date.day}
                       </span>
-                      <span className="text-[10px] font-semibold uppercase tracking-widest text-ink-soft">
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-cream/80">
                         {date.month}
                       </span>
                     </div>
                   </div>
 
                   <div className="p-6">
-                    <h3 className="font-serif text-2xl font-semibold text-ink">
+                    <h3 className="font-serif text-2xl font-semibold text-cream">
                       {event.title}
                     </h3>
-                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-warm">
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-cream/60">
                       {event.subtitle || event.tag ? `${event.tag ? `“${event.tag}” ` : ""}${event.subtitle ?? ""}` : "Join us for worship, teaching, and fellowship."}
                     </p>
-                    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-sand pt-4 text-xs font-medium text-ink-soft">
+                    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/10 pt-4 text-xs font-medium text-cream/75">
                       <span className="inline-flex items-center gap-1.5">
-                        <Clock size={13} className="text-gold-deep" /> {date.time}
+                        <Clock size={13} className="text-gold" /> {date.time}
                       </span>
                       <span className="inline-flex items-center gap-1.5">
-                        <MapPin size={13} className="text-gold-deep" />{" "}
+                        <MapPin size={13} className="text-gold" />{" "}
                         {event.address || "GOM Sanctuary"}
                       </span>
                     </div>

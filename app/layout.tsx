@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import LiquidBackground from "./components/liquid-background";
 import { readSessionCookie } from "@/lib/appwriteServer";
 
 const cormorant = Cormorant_Garamond({
@@ -43,6 +44,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={cormorant.variable}>
       <body className="antialiased">
+        <LiquidBackground />
         <Providers session={session}>{children}</Providers>
       </body>
     </html>

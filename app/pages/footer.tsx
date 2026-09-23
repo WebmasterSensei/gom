@@ -14,7 +14,7 @@ const quickLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gold/20 bg-ink text-cream">
+    <footer className="border-t border-white/10 bg-ink/70 text-cream backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-4">
           {/* Brand */}
@@ -36,7 +36,7 @@ export default function Footer() {
                 </p>
               </div>
             </div>
-            <p className="mt-5 max-w-md text-sm leading-relaxed text-sand/70">
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/60">
               A dwelling place for prayer, worship, and the teaching of God&apos;s
               Word — where lives are transformed and a community is built in
               love.
@@ -45,21 +45,21 @@ export default function Footer() {
               <a
                 href="#"
                 aria-label="Facebook"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:bg-gold hover:text-ink"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:border-gold hover:bg-gold hover:text-ink"
               >
                 <Facebook size={18} />
               </a>
               <a
                 href="#"
                 aria-label="Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:bg-gold hover:text-ink"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:border-gold hover:bg-gold hover:text-ink"
               >
                 <Instagram size={18} />
               </a>
               <a
                 href="#"
                 aria-label="YouTube"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:bg-gold hover:text-ink"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 transition hover:border-gold hover:bg-gold hover:text-ink"
               >
                 <Youtube size={18} />
               </a>
@@ -71,7 +71,7 @@ export default function Footer() {
             <h4 className="font-serif text-lg font-semibold text-gold">
               Explore
             </h4>
-            <ul className="mt-5 space-y-3 text-sm text-sand/80">
+            <ul className="mt-5 space-y-3 text-sm text-cream/70">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <a
@@ -90,24 +90,24 @@ export default function Footer() {
             <h4 className="font-serif text-lg font-semibold text-gold">
               Service Times
             </h4>
-            <ul className="mt-5 space-y-3 text-sm text-sand/80">
+            <ul className="mt-5 space-y-3 text-sm text-cream/70">
               <li>
                 <span className="block font-medium text-cream">Sunday Worship</span>
-                <span className="text-sand/60">10:00 AM – 12:30 PM</span>
+                <span className="text-cream/50">10:00 AM – 12:30 PM</span>
               </li>
               <li>
                 <span className="block font-medium text-cream">Bible Study</span>
-                <span className="text-sand/60">Wednesdays · 6:30 PM</span>
+                <span className="text-cream/50">Wednesdays · 6:30 PM</span>
               </li>
               <li>
                 <span className="block font-medium text-cream">Prayer Meeting</span>
-                <span className="text-sand/60">Fridays · 6:00 AM</span>
+                <span className="text-cream/50">Fridays · 6:00 AM</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-gold/15 pt-8 text-sm text-sand/60 sm:flex-row">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-cream/50 sm:flex-row">
           <p>
             © {new Date().getFullYear()} God&apos;s Oracle Ministries. All rights
             reserved.

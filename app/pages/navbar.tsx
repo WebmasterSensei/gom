@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { gsap } from "@/lib/gsap";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -17,16 +17,18 @@ const links = [
   { href: "#contact", label: "Contact" },
 ];
 
+function subscribeReducedMotion(callback: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
 function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const onChange = () => setReduced(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-  return reduced;
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    () => false
+  );
 }
 
 export default function NavBar() {
@@ -130,7 +132,7 @@ export default function NavBar() {
   return (
     <div className="fixed left-0 right-0 top-0 z-50">
       {/* Service-times ribbon — collapses once the visitor starts scrolling */}
-      <div ref={ribbonRef} className="overflow-hidden bg-ink text-cream">
+      <div ref={ribbonRef} className="overflow-hidden border-b border-white/5 bg-ink/80 text-cream backdrop-blur-xl">
         <p className="mx-auto max-w-7xl px-4 py-1.5 text-center text-xs text-cream/90 sm:px-6 lg:px-8">
           Join us this Sunday at <span className="text-gold">9:00 AM</span> or{" "}
           <span className="text-gold">11:00 AM</span>.
@@ -140,8 +142,8 @@ export default function NavBar() {
       <nav
         ref={navRef}
         className={cn(
-          "border-b border-sand bg-cream/90 backdrop-blur-md transition-shadow duration-300",
-          scrolled ? "shadow-[0_10px_40px_-15px_rgba(99,70,20,0.25)]" : "shadow-none"
+          "glass-nav transition-shadow duration-300",
+          scrolled ? "shadow-[0_18px_50px_-20px_rgba(0,0,0,0.7)]" : "shadow-none"
         )}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -154,15 +156,15 @@ export default function NavBar() {
                   alt="God's Oracle Ministries logo"
                   width={36}
                   height={36}
-                  className="rounded-full border border-[#d8c48a] object-cover transition-transform duration-500 ease-out group-hover:rotate-[8deg]"
+                  className="rounded-full border border-gold/50 object-cover transition-transform duration-500 ease-out group-hover:rotate-[8deg]"
                 />
-                <span className="absolute -inset-1 -z-10 rounded-full bg-gold/20 blur-sm transition-opacity duration-500 group-hover:opacity-70" />
+                <span className="absolute -inset-1 -z-10 rounded-full bg-gold/30 blur-sm transition-opacity duration-500 group-hover:opacity-70" />
               </span>
               <span className="hidden flex-col sm:flex">
-                <span className="font-serif text-lg font-semibold leading-none text-ink">
+                <span className="font-serif text-lg font-semibold leading-none text-cream">
                   God&apos;s Oracle
                 </span>
-                <span className="text-[10px] font-medium text-gold-deep">Ministries</span>
+                <span className="text-[10px] font-medium text-gold">Ministries</span>
               </span>
             </a>
 
@@ -179,8 +181,8 @@ export default function NavBar() {
                   className={cn(
                     "text-sm font-medium transition-colors",
                     activeHref === link.href
-                      ? "text-gold-deep"
-                      : "text-ink-soft hover:text-gold-deep"
+                      ? "text-gold"
+                      : "text-cream/75 hover:text-gold"
                   )}
                 >
                   {link.label}
@@ -191,7 +193,7 @@ export default function NavBar() {
               <span
                 aria-hidden
                 className={cn(
-                  "pointer-events-none absolute -bottom-[9px] h-[2px] rounded-full bg-gold-deep transition-all duration-300 ease-out",
+                  "pointer-events-none absolute -bottom-[9px] h-[2px] rounded-full bg-gold transition-all duration-300 ease-out",
                   indicator.ready ? "opacity-100" : "opacity-0"
                 )}
                 style={{ left: indicator.left, width: indicator.width }}
@@ -201,7 +203,7 @@ export default function NavBar() {
             <div className="hidden lg:block">
               <a
                 href="/donate"
-                className="rounded-full bg-gradient-to-r from-gold-deep to-gold px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:scale-105"
+                className="btn-gold px-5 py-2 text-sm shadow-[0_14px_30px_-10px_rgba(184,134,11,0.6)]"
               >
                 Donate
               </a>
@@ -211,7 +213,7 @@ export default function NavBar() {
             <div className="lg:hidden">
               <button
                 onClick={() => setMobileMenuOpen((open) => !open)}
-                className="text-ink transition-colors hover:text-gold-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-deep"
+                className="text-cream transition-colors hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileMenuOpen}
               >
@@ -223,7 +225,7 @@ export default function NavBar() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div ref={menuRef} className="border-t border-sand bg-cream/95 lg:hidden">
+          <div ref={menuRef} className="glass-nav border-t-0 lg:hidden">
             <div className="space-y-0.5 px-4 pb-5 pt-2">
               {links.map((link) => (
                 <a
@@ -235,8 +237,8 @@ export default function NavBar() {
                   className={cn(
                     "block rounded-lg border-l-2 py-2.5 pl-3 text-[15px] font-medium transition-colors",
                     activeHref === link.href
-                      ? "border-gold-deep bg-cream-dark text-gold-deep"
-                      : "border-transparent text-ink-soft hover:border-sand hover:bg-cream-dark"
+                      ? "border-gold bg-white/10 text-gold"
+                      : "border-transparent text-cream/75 hover:border-gold/40 hover:bg-white/[0.06] hover:text-gold"
                   )}
                 >
                   {link.label}
@@ -246,7 +248,7 @@ export default function NavBar() {
                 href="/donate"
                 data-menu-item
                 onClick={() => setMobileMenuOpen(false)}
-                className="mt-3 block rounded-full bg-gradient-to-r from-gold-deep to-gold px-5 py-2.5 text-center text-sm font-semibold text-white"
+                className="btn-gold mt-3 block px-5 py-2.5 text-center text-sm"
               >
                 Donate
               </a>

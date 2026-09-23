@@ -162,7 +162,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-4 py-28 text-center sm:px-6">
-        <span className="hero-badge inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gold-deep backdrop-blur">
+        <span className="hero-badge glass-chip inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
           <Sparkles size={13} />
           A Ministry of Faith &amp; Fellowship
         </span>
@@ -185,7 +185,7 @@ export default function Hero() {
           <span className="hero-title-line block text-5xl sm:text-7xl">
             God&apos;s Oracle
           </span>
-          <span className="hero-title-line block text-3xl italic text-gold sm:text-5xl">
+          <span className="hero-title-line block text-3xl italic text-gold sm:text-5xl text-gold-glow">
             Ministries
           </span>
         </h1>
@@ -199,14 +199,14 @@ export default function Hero() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             href="#events"
-            className="hero-cta group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-gold-deep to-gold px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-gold/30 transition hover:scale-105"
+            className="hero-cta group btn-gold px-8 py-3.5 text-sm shadow-[0_20px_40px_-14px_rgba(184,134,11,0.7)]"
           >
             <CalendarHeart size={17} />
             Explore Services
           </a>
           <a
             href="#aboutus"
-            className="hero-cta inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-8 py-3.5 text-sm font-semibold text-cream backdrop-blur transition hover:border-gold hover:text-gold"
+            className="hero-cta inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/[0.08] px-8 py-3.5 text-sm font-semibold text-cream backdrop-blur-md transition hover:border-gold hover:bg-white/[0.14] hover:text-gold"
           >
             Discover Us
           </a>

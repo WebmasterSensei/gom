@@ -13,7 +13,6 @@ import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-import NavBar from "../pages/navbar";
 import SectionHeading from "../pages/partials/section-heading";
 import NavBarLink from "../pages/navbarhref";
 
@@ -212,7 +211,7 @@ export default function Donate() {
   };
 
   const inputClass =
-    "w-full rounded-xl border border-sand bg-white px-4 py-3 text-sm text-ink placeholder:text-muted-warm/60 outline-none transition focus:border-gold focus:ring-1 focus:ring-gold";
+    "input-glass";
 
   const formatPeso = (value: number) =>
     new Intl.NumberFormat("en-PH", {
@@ -222,7 +221,7 @@ export default function Donate() {
     }).format(value);
 
   return (
-    <section id="donate" ref={root} className="bg-cream-dark/60 py-24 sm:py-32">
+    <section id="donate" ref={root} className="bg-transparent py-24 sm:py-32">
       <NavBarLink />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
@@ -234,7 +233,7 @@ export default function Donate() {
         <div className="mt-14 grid gap-8 lg:grid-cols-5">
           {/* Info */}
           <div className="give-card space-y-5 lg:col-span-2">
-            <div className="rounded-2xl border border-gold/30 bg-gradient-to-br from-[#3f3120] to-[#2a2115] p-6 text-cream sm:p-8">
+            <div className="glass-panel p-6 text-cream sm:p-8">
               <span className="inline-flex items-center gap-2 rounded-full bg-gold/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                 <HandCoins size={14} />
                 Give Online
@@ -251,39 +250,39 @@ export default function Donate() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-sand bg-white p-6">
+            <div className="glass-panel p-6">
               <div className="flex items-center gap-3">
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-gold-deep to-gold text-white shadow-md">
                   <ShieldCheck size={20} />
                 </span>
                 <div>
-                  <h4 className="font-semibold text-ink">
+                  <h4 className="font-semibold text-cream">
                     Secure &amp; Simple
                   </h4>
-                  <p className="text-xs text-muted-warm">
+                  <p className="text-xs text-cream/60">
                     Payments are processed by PayMongo, a trusted PH gateway.
                   </p>
                 </div>
               </div>
-              <ul className="mt-5 space-y-2.5 text-sm text-ink-soft">
+              <ul className="mt-5 space-y-2.5 text-sm text-cream/80">
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2
                     size={16}
-                    className="mt-0.5 shrink-0 text-gold-deep"
+                    className="mt-0.5 shrink-0 text-gold"
                   />
                   Powered by Bangko Sentral-licensed PayMongo
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2
                     size={16}
-                    className="mt-0.5 shrink-0 text-gold-deep"
+                    className="mt-0.5 shrink-0 text-gold"
                   />
                   No card details are stored on this site
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2
                     size={16}
-                    className="mt-0.5 shrink-0 text-gold-deep"
+                    className="mt-0.5 shrink-0 text-gold"
                   />
                   Every peso goes to God&apos;s Oracle Ministries
                 </li>
@@ -294,18 +293,18 @@ export default function Donate() {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="give-card rounded-2xl border border-sand bg-white p-6 shadow-sm sm:p-8 lg:col-span-3"
+            className="give-card glass-panel p-6 sm:p-8 lg:col-span-3"
           >
             {banner && (
               <div
                 className={cn(
                   "mb-6 flex items-start gap-3 rounded-xl border px-4 py-3 text-sm",
                   banner.kind === "paid" &&
-                    "border-green-200 bg-green-50 text-green-800",
+                    "border-emerald-300/30 bg-emerald-500/10 text-emerald-200",
                   banner.kind === "pending" &&
-                    "border-amber-200 bg-amber-50 text-amber-800",
+                    "border-amber-300/30 bg-amber-500/10 text-amber-200",
                   banner.kind === "failed" &&
-                    "border-red-200 bg-red-50 text-red-700"
+                    "border-red-300/30 bg-red-500/10 text-red-200"
                 )}
               >
                 {banner.kind === "paid" ? (
@@ -321,7 +320,7 @@ export default function Donate() {
 
             {/* Amount */}
             <div>
-              <label className="mb-2 block text-sm font-medium text-ink-soft">
+              <label className="mb-2 block text-sm font-medium text-cream/85">
                 Donation Amount
               </label>
               <div className="flex flex-wrap gap-2.5">
@@ -333,8 +332,8 @@ export default function Donate() {
                     className={cn(
                       "rounded-full border px-5 py-2.5 text-sm font-semibold transition",
                       amount === preset && !customAmount
-                        ? "border-gold bg-gradient-to-r from-gold-deep to-gold text-white shadow-md shadow-gold/25"
-                        : "border-sand bg-cream text-ink-soft hover:border-gold hover:text-gold-deep"
+                        ? "btn-gold border-transparent shadow-[0_14px_30px_-10px_rgba(184,134,11,0.6)]"
+                        : "border-white/15 bg-white/[0.06] text-cream/75 hover:border-gold hover:text-gold"
                     )}
                   >
                     {formatPeso(preset)}
@@ -342,7 +341,7 @@ export default function Donate() {
                 ))}
               </div>
               <div className="relative mt-3">
-                <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted-warm">
+                <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-cream/60">
                   ₱
                 </span>
                 <input
@@ -363,7 +362,7 @@ export default function Donate() {
 
             {/* Wallet */}
             <div className="mt-6">
-              <label className="mb-2 block text-sm font-medium text-ink-soft">
+              <label className="mb-2 block text-sm font-medium text-cream/85">
                 Pay With
               </label>
               <div className="grid gap-2.5 sm:grid-cols-2">
@@ -375,8 +374,8 @@ export default function Donate() {
                     className={cn(
                       "flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition",
                       wallet === w.id
-                        ? "border-gold bg-cream shadow-sm ring-1 ring-gold/40"
-                        : "border-sand bg-white hover:border-gold/50 hover:bg-cream"
+                        ? "border-gold bg-white/[0.1] shadow-sm ring-1 ring-gold/40"
+                        : "border-white/15 bg-white/[0.04] hover:border-gold/50 hover:bg-white/[0.08]"
                     )}
                   >
                     <span
@@ -388,17 +387,17 @@ export default function Donate() {
                       <Wallet size={18} />
                     </span>
                     <span>
-                      <span className="block text-sm font-semibold text-ink">
+                      <span className="block text-sm font-semibold text-cream">
                         {w.label}
                       </span>
-                      <span className="block text-xs text-muted-warm">
+                      <span className="block text-xs text-cream/60">
                         {w.hint}
                       </span>
                     </span>
                     <span
                       className={cn(
                         "ml-auto h-4 w-4 rounded-full border-2",
-                        wallet === w.id ? "border-gold bg-gold" : "border-sand"
+                        wallet === w.id ? "border-gold bg-gold" : "border-white/30"
                       )}
                     ></span>
                   </button>
@@ -409,7 +408,7 @@ export default function Donate() {
             {/* Details */}
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm font-medium text-ink-soft">
+                <label className="mb-2 block text-sm font-medium text-cream/85">
                   Name (optional)
                 </label>
                 <input
@@ -421,7 +420,7 @@ export default function Donate() {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-ink-soft">
+                <label className="mb-2 block text-sm font-medium text-cream/85">
                   Email (optional)
                 </label>
                 <input
@@ -433,7 +432,7 @@ export default function Donate() {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-ink-soft">
+                <label className="mb-2 block text-sm font-medium text-cream/85">
                   Phone (optional)
                 </label>
                 <input
@@ -445,7 +444,7 @@ export default function Donate() {
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="mb-2 block text-sm font-medium text-ink-soft">
+                <label className="mb-2 block text-sm font-medium text-cream/85">
                   Note / Prayer Request (optional)
                 </label>
                 <input
@@ -459,7 +458,7 @@ export default function Donate() {
             </div>
 
             {error && (
-              <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <p className="mt-4 rounded-xl border border-red-300/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                 {error}
               </p>
             )}
@@ -467,7 +466,7 @@ export default function Donate() {
             <button
               type="submit"
               disabled={phase === "submitting" || phase === "redirecting"}
-              className="give-cta mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-deep to-gold px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-gold/30 transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+              className="give-cta btn-gold mt-6 w-full px-8 py-3.5 text-sm shadow-[0_20px_40px_-14px_rgba(184,134,11,0.7)] disabled:cursor-not-allowed"
             >
               {phase === "submitting" || phase === "verifying" ? (
                 <>
@@ -487,7 +486,7 @@ export default function Donate() {
               )}
             </button>
 
-            <p className="mt-4 text-center text-xs text-muted-warm">
+            <p className="mt-4 text-center text-xs text-cream/60">
               Min ₱1 · Max ₱100,000 per transaction. You&apos;ll complete your
               donation inside your chosen wallet&apos;s app.
             </p>

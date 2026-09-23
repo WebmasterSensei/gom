@@ -53,15 +53,15 @@ const announcements = [
 
 export default function Dashboard() {
   return (
-    <main className="min-h-screen bg-cream px-4 pb-12 pt-24 sm:px-6 lg:px-8">
+    <main className="min-h-screen px-4 pb-12 pt-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="flex flex-col gap-2">
-          <h1 className="font-serif text-3xl font-semibold text-ink sm:text-4xl">
+          <h1 className="font-serif text-3xl font-semibold text-cream sm:text-4xl">
             Dashboard Overview
           </h1>
           <div className="h-px w-16 bg-gradient-to-r from-gold to-transparent"></div>
-          <p className="text-sm text-muted-warm">
+          <p className="text-sm text-cream/60">
             Welcome back, steward. Here&apos;s what&apos;s happening across the
             ministry.
           </p>
@@ -72,27 +72,27 @@ export default function Dashboard() {
           {stats.map((stat) => (
             <div
               key={stat.name}
-              className="rounded-2xl border border-sand bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              className="glass-panel p-6 transition hover:-translate-y-1 hover:shadow-[0_34px_70px_-24px_rgba(0,0,0,0.65)]"
             >
               <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-gold/20 to-gold/5 text-gold-deep">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/15 text-gold">
                   <stat.icon size={22} />
                 </span>
-                <span className="inline-flex items-center gap-0.5 rounded-full bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-700">
+                <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-200">
                   <ArrowUpRight size={12} />
                   {stat.change}
                 </span>
               </div>
-              <p className="mt-4 font-serif text-3xl font-semibold text-ink">
+              <p className="mt-4 font-serif text-3xl font-semibold text-cream">
                 {stat.value}
               </p>
-              <p className="mt-1 text-sm font-medium text-muted-warm">{stat.name}</p>
+              <p className="mt-1 text-sm font-medium text-cream/60">{stat.name}</p>
             </div>
           ))}
         </div>
 
         {/* Manage grid */}
-        <h2 className="mt-12 font-serif text-2xl font-semibold text-ink">
+        <h2 className="mt-12 font-serif text-2xl font-semibold text-cream">
           Ministry Management
         </h2>
         <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -100,14 +100,14 @@ export default function Dashboard() {
             <a
               key={link.href}
               href={link.href}
-              className="group rounded-2xl border border-sand bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-gold/50 hover:shadow-lg"
+              className="group glass-panel p-6 transition hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_34px_70px_-24px_rgba(0,0,0,0.65)]"
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-gold-deep to-gold text-white shadow-md">
                 <link.icon size={22} />
               </span>
-              <h3 className="mt-4 font-semibold text-ink">{link.label}</h3>
-              <p className="mt-1 text-sm text-muted-warm">{link.desc}</p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gold-deep opacity-0 transition group-hover:opacity-100">
+              <h3 className="mt-4 font-semibold text-cream">{link.label}</h3>
+              <p className="mt-1 text-sm text-cream/60">{link.desc}</p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gold opacity-0 transition group-hover:opacity-100">
                 Open <ArrowUpRight size={14} />
               </span>
             </a>
@@ -115,21 +115,21 @@ export default function Dashboard() {
         </div>
 
         {/* Announcements */}
-        <div className="mt-12 rounded-2xl border border-sand bg-white p-6 shadow-sm sm:p-8">
+        <div className="mt-12 glass-panel p-6 sm:p-8">
           <div className="flex items-center gap-3">
-            <HeartHandshake className="text-gold-deep" size={22} />
-            <h2 className="font-serif text-2xl font-semibold text-ink">
+            <HeartHandshake className="text-gold" size={22} />
+            <h2 className="font-serif text-2xl font-semibold text-cream">
               Ministry Notes
             </h2>
           </div>
-          <div className="mt-6 divide-y divide-sand">
+          <div className="mt-6 divide-y divide-white/10">
             {announcements.map((item) => (
               <div key={item.title} className="flex items-start justify-between gap-4 py-4">
                 <div>
-                  <h3 className="font-medium text-ink">{item.title}</h3>
-                  <p className="mt-1 text-sm text-muted-warm">{item.desc}</p>
+                  <h3 className="font-medium text-cream">{item.title}</h3>
+                  <p className="mt-1 text-sm text-cream/60">{item.desc}</p>
                 </div>
-                <span className="shrink-0 text-xs font-medium text-muted-warm/70">
+                <span className="shrink-0 text-xs font-medium text-cream/50">
                   {item.time}
                 </span>
               </div>

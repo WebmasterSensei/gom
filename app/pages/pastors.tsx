@@ -56,7 +56,7 @@ export default function Pastors() {
   );
 
   return (
-    <section id="pastors" ref={root} className="bg-cream py-24 sm:py-32">
+    <section id="pastors" ref={root} className="bg-transparent py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           overline="Godly Leadership"
@@ -65,9 +65,9 @@ export default function Pastors() {
         />
 
         {loading ? (
-          <p className="mt-14 text-center text-sm text-muted-warm">Loading pastors…</p>
+          <p className="mt-14 text-center text-sm text-cream/60">Loading pastors…</p>
         ) : pastors.length === 0 ? (
-          <p className="mt-14 text-center text-sm text-muted-warm">
+          <p className="mt-14 text-center text-sm text-cream/60">
             Pastor profiles are being prepared.
           </p>
         ) : (
@@ -77,9 +77,9 @@ export default function Pastors() {
               return (
                 <article
                   key={pastor.$id}
-                  className="pastor-card group overflow-hidden rounded-2xl border border-sand bg-white text-center shadow-sm transition hover:-translate-y-1.5 hover:shadow-xl"
+                  className="pastor-card group glass-panel overflow-hidden text-center transition hover:-translate-y-1.5 hover:shadow-[0_36px_80px_-28px_rgba(0,0,0,0.7)]"
                 >
-                  <div className="relative mx-auto mt-8 h-36 w-36 overflow-hidden rounded-full border-4 border-gold/30 shadow-lg transition group-hover:border-gold/60">
+                  <div className="relative mx-auto mt-8 h-36 w-36 overflow-hidden rounded-full border-4 border-gold/30 shadow-lg transition group-hover:border-gold/70">
                     {img ? (
                       <img
                         src={img}
@@ -87,24 +87,24 @@ export default function Pastors() {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gold/25 to-burgundy/20 font-serif text-4xl font-semibold text-gold-deep">
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gold/25 to-burgundy/20 font-serif text-4xl font-semibold text-gold">
                         {(pastor.name || "?").charAt(0)}
                       </div>
                     )}
                   </div>
                   <div className="p-6">
-                    <h3 className="font-serif text-2xl font-semibold text-ink">
+                    <h3 className="font-serif text-2xl font-semibold text-cream">
                       {pastor.name}
                     </h3>
-                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold-deep">
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                       {pastor.rank || "Minister"}
                     </p>
                     <div className="mx-auto mt-4 h-px w-16 bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
-                    <p className="mt-4 text-sm leading-relaxed text-muted-warm">
+                    <p className="mt-4 text-sm leading-relaxed text-cream/60">
                       {pastor.address || "Serving faithfully in the ministry of God's Oracle."}
                     </p>
                     {pastor.startdate && (
-                      <p className="mt-2 text-xs font-medium text-ink-soft">
+                      <p className="mt-2 text-xs font-medium text-cream/70">
                         Serving since {new Date(pastor.startdate).toLocaleDateString("en-US", { year: "numeric" })}
                       </p>
                     )}

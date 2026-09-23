@@ -11,7 +11,7 @@ import DailyVerse from "./pages/verse";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-cream text-ink">
+    <div className="min-h-screen text-cream">
       <NavBar />
       <Hero />
       <DailyVerse/>

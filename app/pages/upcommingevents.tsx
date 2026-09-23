@@ -86,7 +86,7 @@ export default function UpComingEvents() {
   const rest = events.slice(1, 3);
 
   return (
-    <section id="upcoming" ref={root} className="relative overflow-hidden bg-ink py-24 sm:py-32">
+    <section id="upcoming" ref={root} className="relative overflow-hidden bg-ink/70 py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute right-0 top-1/4 h-80 w-80 rounded-full bg-gold/10 blur-3xl"></div>
         <div className="absolute bottom-1/4 left-0 h-72 w-72 rounded-full bg-burgundy/20 blur-3xl"></div>
@@ -94,18 +94,18 @@ export default function UpComingEvents() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          className="[&_.sh-title]:text-cream [&_.sh-sub]:text-sand/80"
+          className="[&_.sh-title]:text-cream [&_.sh-sub]:text-cream/60"
           overline="Mark Your Calendar"
           title="Upcoming Events"
           subtitle="Join us for our next services, fellowship nights, and ministry programs."
         />
 
         {loading ? (
-          <p className="mt-14 text-center text-sm text-sand/70">Loading upcoming events…</p>
+          <p className="mt-14 text-center text-sm text-cream/60">Loading upcoming events…</p>
         ) : next ? (
           <>
             {/* Spotlight */}
-            <div className="up-spotlight mt-14 grid items-center overflow-hidden rounded-3xl border border-gold/20 bg-gradient-to-br from-[#3f3120] to-[#2a2115] shadow-2xl lg:grid-cols-2">
+            <div className="up-spotlight mt-14 grid items-center overflow-hidden rounded-3xl glass-panel lg:grid-cols-2">
               <div className="relative h-64 lg:h-auto">
                 {next.image ? (
                   <img
@@ -121,13 +121,13 @@ export default function UpComingEvents() {
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent lg:bg-gradient-to-r"></div>
               </div>
               <div className="p-8 sm:p-12">
-                <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-gold">
+                <span className="glass-chip inline-flex items-center gap-2 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-gold">
                   Next Service
                 </span>
                 <h3 className="mt-5 font-serif text-3xl font-semibold text-cream sm:text-4xl">
                   {next.title}
                 </h3>
-                <p className="mt-4 max-w-md leading-relaxed text-sand/85">
+                <p className="mt-4 max-w-md leading-relaxed text-cream/70">
                   {next.subtitle || (next.tag ? `Theme: ${next.tag}` : "Join us for worship and ministry.")}
                   {next.gspeaker ? ` · Guest Speaker: ${next.gspeaker}` : ""}
                 </p>
@@ -170,7 +170,7 @@ export default function UpComingEvents() {
                         <h4 className="font-serif text-xl font-semibold text-cream">
                           {event.title}
                         </h4>
-                        <p className="mt-1 line-clamp-2 text-sm text-sand/70">
+                        <p className="mt-1 line-clamp-2 text-sm text-cream/60">
                           {event.subtitle || event.tag || "Join us for worship and ministry."}
                         </p>
                         <p className="mt-2 text-xs font-medium text-gold">
@@ -184,7 +184,7 @@ export default function UpComingEvents() {
             )}
           </>
         ) : (
-          <p className="mt-14 text-center text-sm text-sand/70">
+          <p className="mt-14 text-center text-sm text-cream/60">
             No upcoming services scheduled yet — check back soon.
           </p>
         )}

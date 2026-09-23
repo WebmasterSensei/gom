@@ -183,36 +183,38 @@ export default function DailyVerse() {
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6">
-        <p className="verse-over text-xs font-semibold uppercase tracking-[0.4em] text-gold">
-          A Word for Today
-        </p>
-
-        <span className="verse-text mt-8 block font-serif text-7xl text-gold/80">
-          “
-        </span>
-
-        <p className="verse-text mt-2 font-serif text-3xl font-medium italic leading-snug text-cream sm:text-4xl">
-          {loading
-            ? "Loading today's verse..."
-            : verse?.text?.trim() ||
-              "Unable to load today's verse."}
-        </p>
-
-        <div className="mt-10 flex items-center justify-center gap-4">
-          <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold/60" />
-
-          <p className="verse-ref text-sm font-semibold uppercase tracking-[0.3em] text-gold sm:text-base">
-            {loading ? "..." : verse?.reference}
+        <div className="glass-panel px-6 py-12 sm:px-12 sm:py-14">
+          <p className="verse-over text-xs font-semibold uppercase tracking-[0.4em] text-gold">
+            A Word for Today
           </p>
 
-          <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold/60" />
+          <span className="verse-text mt-8 block font-serif text-7xl text-gold/80 text-gold-glow">
+            “
+          </span>
+
+          <p className="verse-text mt-2 font-serif text-3xl font-medium italic leading-snug text-cream sm:text-4xl">
+            {loading
+              ? "Loading today's verse..."
+              : verse?.text?.trim() ||
+                "Unable to load today's verse."}
+          </p>
+
+          <div className="mt-10 flex items-center justify-center gap-4">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold/60" />
+
+            <p className="verse-ref text-sm font-semibold uppercase tracking-[0.3em] text-gold sm:text-base">
+              {loading ? "..." : verse?.reference}
+            </p>
+
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold/60" />
+          </div>
+
+          {!loading && verse?.translation_name && (
+            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-cream/50">
+              {verse.translation_name}
+            </p>
+          )}
         </div>
-
-        {!loading && verse?.translation_name && (
-          <p className="mt-4 text-xs uppercase tracking-[0.2em] text-cream/50">
-            {verse.translation_name}
-          </p>
-        )}
       </div>
     </section>
   );

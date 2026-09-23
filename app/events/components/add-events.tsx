@@ -155,28 +155,28 @@ export default function AddEventComponent({
   };
 
   const inputClass =
-    "w-full border border-[#e2d8c2] rounded-lg py-2.5 px-4 text-sm text-[#33281a] bg-[#fbf8f1] placeholder-[#b3a68a] focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227] outline-none transition";
+    "input-glass";
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-16 bg-[#faf7f0] text-[#33281a]">
+    <section className="px-4 sm:px-6 lg:px-8 py-16 bg-transparent text-[#f5efe4]">
       <form
         onSubmit={handleSubmit}
-        className="space-y-5 max-w-xl md:max-w-3xl lg:max-w-4xl mx-auto bg-white rounded-2xl border border-[#ece3cd] shadow-[0_20px_50px_-20px_rgba(99,70,20,0.25)] p-6 sm:p-10"
+        className="space-y-5 max-w-xl md:max-w-3xl lg:max-w-4xl mx-auto bg-white/[0.06] backdrop-blur-xl rounded-2xl border border-[rgba(255,255,255,0.14)] shadow-[0_20px_50px_-20px_rgba(99,70,20,0.25)] p-6 sm:p-10"
       >
-        <h2 className="text-2xl sm:text-3xl font-serif font-semibold text-center text-[#33281a] mb-2">
+        <h2 className="text-2xl sm:text-3xl font-serif font-semibold text-center text-[#f5efe4] mb-2">
           {documentId ? "Edit Event" : "Add Events"}
         </h2>
         <div className="mx-auto mb-6 h-px w-20 bg-gradient-to-r from-transparent via-[#c9a227] to-transparent"></div>
 
         {message && (
-          <div className="rounded-xl border border-[#d8cfa9] bg-[#faf6e8] px-4 py-3 text-sm text-[#7a5c12]">
+          <div className="rounded-xl border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-gold">
             {message}
           </div>
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
-            <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+            <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
               Title
             </label>
             <input
@@ -190,7 +190,7 @@ export default function AddEventComponent({
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+            <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
               Address
             </label>
             <input
@@ -204,7 +204,7 @@ export default function AddEventComponent({
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+            <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
               Start Time
             </label>
             <input
@@ -218,7 +218,7 @@ export default function AddEventComponent({
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+            <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
               End Time
             </label>
             <input
@@ -232,7 +232,7 @@ export default function AddEventComponent({
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+            <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
               Guess Speaker
             </label>
             <input
@@ -246,7 +246,7 @@ export default function AddEventComponent({
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+            <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
               Tag
             </label>
             <input
@@ -262,7 +262,7 @@ export default function AddEventComponent({
         </div>
 
         <div>
-          <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+          <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
             Theme
           </label>
           <input
@@ -277,7 +277,7 @@ export default function AddEventComponent({
         </div>
 
         <div>
-          <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+          <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
             Date
           </label>
           <input
@@ -291,7 +291,7 @@ export default function AddEventComponent({
         </div>
 
         <div>
-          <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+          <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
             Status
           </label>
           <select
@@ -307,17 +307,17 @@ export default function AddEventComponent({
         </div>
 
         <div>
-          <label className="text-sm font-medium text-[#4a3f2c] mb-2 block">
+          <label className="text-sm font-medium text-[#e6dccb] mb-2 block">
             Upload Image
           </label>
           <input
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="w-full border border-[#e2d8c2] rounded-lg py-2 px-4 text-sm cursor-pointer bg-[#fbf8f1] transition focus:border-[#c9a227]"
+            className="input-glass cursor-pointer py-2"
           />
           {imageFile && (
-            <p className="text-sm text-[#7c6f5a] mt-1">
+            <p className="text-sm text-[#c3b6a4] mt-1">
               Selected: {imageFile.name}
             </p>
           )}
@@ -326,7 +326,7 @@ export default function AddEventComponent({
         <button
           type="submit"
           disabled={loading}
-          className="flex items-center justify-center w-full bg-gradient-to-r from-[#b8860b] to-[#c9a227] hover:from-[#a37408] hover:to-[#b8860b] text-white font-medium text-[15px] px-4 py-3 rounded-lg shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-gold w-full px-4 py-3 text-[15px] shadow-[0_18px_36px_-14px_rgba(184,134,11,0.6)] disabled:cursor-not-allowed"
         >
           {loading ? (documentId ? "Updating..." : "Adding...") : (documentId ? "Update Event" : "Add Event")}
         </button>

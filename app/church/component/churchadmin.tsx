@@ -82,9 +82,9 @@ export default function ChurchesAdmin() {
 
     const getStatusBadge = (status: ChurchStatus) => {
         const statusStyles: Record<ChurchStatus, string> = {
-            Active: 'bg-green-100 text-green-800',
-            Inactive: 'bg-red-100 text-red-800',
-            Pending: 'bg-yellow-100 text-yellow-800'
+            Active: 'bg-emerald-500/15 text-emerald-200',
+            Inactive: 'bg-red-500/15 text-red-200',
+            Pending: 'bg-amber-500/15 text-amber-200'
         };
 
         return (
@@ -119,14 +119,14 @@ export default function ChurchesAdmin() {
     ];
 
     return (
-        <div className="min-h-screen bg-[#faf7f0] p-4 sm:p-6 lg:p-8">
+        <div className="min-h-screen bg-transparent p-4 sm:p-6 lg:p-8">
             <div className="max-w-7xl mx-auto pt-10">
                 {/* Header */}
                 <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-serif font-semibold text-[#33281a]">Church Lists</h1>
+                        <h1 className="text-3xl font-serif font-semibold text-[#f5efe4]">Church Lists</h1>
                         <div className="mt-2 h-px w-16 bg-gradient-to-r from-[#c9a227] to-transparent"></div>
-                        <p className="mt-2 text-sm text-[#7c6f5a]">
+                        <p className="mt-2 text-sm text-[#c3b6a4]">
                             Manage church information
                         </p>
                     </div>
@@ -141,18 +141,18 @@ export default function ChurchesAdmin() {
                 </div>
 
                 {/* Controls */}
-                <div className="mb-6 bg-white rounded-xl border border-[#ece3cd] p-4">
+                <div className="mb-6 bg-white/[0.06] backdrop-blur-xl rounded-xl border border-[rgba(255,255,255,0.14)] p-4">
                     <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
                         <div className="relative w-full sm:w-80">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg className="h-5 w-5 text-[#b3a68a]" fill="currentColor" viewBox="0 0 20 20">
+                                <svg className="h-5 w-5 text-[#9b8d7a]" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                                 </svg>
                             </div>
                             <input
                                 type="text"
                                 placeholder="Search churches..."
-                                className="block w-full pl-10 pr-3 py-2 border border-[#e2d8c2] rounded-lg leading-5 bg-[#fbf8f1] text-[#33281a] placeholder-[#b3a68a] focus:outline-none focus:ring-1 focus:ring-[#c9a227] focus:border-[#c9a227] sm:text-sm"
+                                className="block w-full pl-10 pr-3 py-2 border border-[rgba(255,255,255,0.14)] rounded-lg leading-5 bg-[rgba(255,255,255,0.04)] text-[#f5efe4] placeholder-[#9b8d7a] focus:outline-none focus:ring-1 focus:ring-[#c9a227] focus:border-[#c9a227] sm:text-sm"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
@@ -160,7 +160,7 @@ export default function ChurchesAdmin() {
                         <select
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
-                            className="w-full sm:w-44 border border-[#e2d8c2] rounded-lg py-2 px-3 text-sm text-[#33281a] bg-[#fbf8f1] focus:outline-none focus:ring-1 focus:ring-[#c9a227] focus:border-[#c9a227]"
+                            className="w-full sm:w-44 border border-[rgba(255,255,255,0.14)] rounded-lg py-2 px-3 text-sm text-[#f5efe4] bg-[rgba(255,255,255,0.04)] focus:outline-none focus:ring-1 focus:ring-[#c9a227] focus:border-[#c9a227]"
                         >
                             <option value="All">All statuses</option>
                             <option value="Active">Active</option>
@@ -172,16 +172,16 @@ export default function ChurchesAdmin() {
 
                 {editingDoc && (
                     <div className="mb-6">
-                        <div className="flex items-center justify-between bg-white rounded-xl border border-[#ece3cd] p-4 mb-4">
+                        <div className="flex items-center justify-between bg-white/[0.06] backdrop-blur-xl rounded-xl border border-[rgba(255,255,255,0.14)] p-4 mb-4">
                             <div>
-                                <h2 className="font-serif text-lg font-semibold text-[#33281a]">
+                                <h2 className="font-serif text-lg font-semibold text-[#f5efe4]">
                                     Editing: {editingDoc.name}
                                 </h2>
-                                <p className="text-sm text-[#7c6f5a]">Update the details below, then save your changes.</p>
+                                <p className="text-sm text-[#c3b6a4]">Update the details below, then save your changes.</p>
                             </div>
                             <button
                                 onClick={() => setEditingDoc(null)}
-                                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-[#e2d8c2] text-[#4a3f2c] bg-white hover:bg-[#f4ecdf] transition"
+                                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-[rgba(255,255,255,0.14)] text-[#e6dccb] bg-white/[0.06] backdrop-blur-xl hover:bg-[rgba(255,255,255,0.07)] transition"
                             >
                                 Cancel
                             </button>
@@ -195,15 +195,15 @@ export default function ChurchesAdmin() {
                 )}
 
                 {/* Table */}
-                <div className="bg-white shadow-sm rounded-xl border border-[#ece3cd] overflow-hidden">
+                <div className="bg-white/[0.06] backdrop-blur-xl shadow-sm rounded-xl border border-[rgba(255,255,255,0.14)] overflow-hidden">
                     <div className="hidden lg:block overflow-x-auto">
-                        <table className="min-w-full divide-y divide-[#ece3cd]">
-                            <thead className="bg-[#f4ecdf]">
+                        <table className="min-w-full divide-y divide-[rgba(255,255,255,0.14)]">
+                            <thead className="bg-[rgba(255,255,255,0.07)]">
                                 <tr>
                                     {columns.map((column) => (
                                         <th
                                             key={column.key}
-                                            className="px-6 py-3 text-left text-xs font-semibold text-[#4a3f2c] uppercase tracking-wider cursor-pointer hover:bg-[#efe6d3]"
+                                            className="px-6 py-3 text-left text-xs font-semibold text-[#e6dccb] uppercase tracking-wider cursor-pointer hover:bg-[rgba(255,255,255,0.09)]"
                                             onClick={() => column.key !== 'actions' && handleSort(column.key as ChurchSortField)}
                                         >
                                             <div className="flex items-center space-x-1">
@@ -218,37 +218,37 @@ export default function ChurchesAdmin() {
                                     ))}
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-[#f0e9da]">
+                            <tbody className="bg-white/[0.06] backdrop-blur-xl divide-y divide-[rgba(255,255,255,0.06)]">
                                 {filteredchurches.map((church) => (
-                                    <tr key={church.$id} className="hover:bg-[#fbf8f1] transition">
+                                    <tr key={church.$id} className="hover:bg-[rgba(255,255,255,0.04)] transition">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <div className="ml-4">
-                                                    <div className="text-sm font-medium text-[#33281a]">{church?.name}</div>
-                                                    <div className="text-sm text-[#7c6f5a]">{church?.desc}</div>
+                                                    <div className="text-sm font-medium text-[#f5efe4]">{church?.name}</div>
+                                                    <div className="text-sm text-[#c3b6a4]">{church?.desc}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-[#4a3f2c]">{church?.address}</div>
+                                            <div className="text-sm text-[#e6dccb]">{church?.address}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-[#4a3f2c]">{church?.desc}</div>
+                                            <div className="text-sm text-[#e6dccb]">{church?.desc}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-[#4a3f2c]">{church?.map}</div>
+                                            <div className="text-sm text-[#e6dccb]">{church?.map}</div>
                                             {getStatusBadge(church.status)}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <button
                                                 onClick={() => setEditingDoc(church)}
-                                                className="text-[#8a6d1a] hover:text-[#a37408] mr-3"
+                                                className="text-[#e2b64a] hover:text-[#d9a72f] mr-3"
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(church.$id)}
-                                                className="text-[#7d2e3d] hover:text-[#a33b4d]"
+                                                className="text-[#e0667f] hover:text-[#ff859e]"
                                             >
                                                 Delete
                                             </button>
@@ -262,12 +262,12 @@ export default function ChurchesAdmin() {
                     {/* Mobile Cards */}
                     <div className="lg:hidden">
                         {filteredchurches.map((church) => (
-                            <div key={church.$id} className="border-b border-[#f0e9da] p-4 hover:bg-[#fbf8f1]">
+                            <div key={church.$id} className="border-b border-[rgba(255,255,255,0.06)] p-4 hover:bg-[rgba(255,255,255,0.04)]">
                                 <div className="flex items-start justify-between mb-3">
                                     <div className="flex items-center">
                                         <div className="ml-4">
-                                            <h3 className="text-sm font-medium text-[#33281a]">{church.name}</h3>
-                                            <p className="text-sm text-[#7c6f5a]">{church.desc}</p>
+                                            <h3 className="text-sm font-medium text-[#f5efe4]">{church.name}</h3>
+                                            <p className="text-sm text-[#c3b6a4]">{church.desc}</p>
                                         </div>
                                     </div>
                                     {getStatusBadge(church.status)}
@@ -275,25 +275,25 @@ export default function ChurchesAdmin() {
 
                                 <div className="grid grid-cols-2 gap-4 text-sm mt-3">
                                     <div>
-                                        <span className="font-medium text-[#b3a68a]">Address:</span>
-                                        <p className="text-[#33281a]">{church?.address}</p>
+                                        <span className="font-medium text-[#9b8d7a]">Address:</span>
+                                        <p className="text-[#f5efe4]">{church?.address}</p>
                                     </div>
                                     <div>
-                                        <span className="font-medium text-[#b3a68a]">Embedded Map:</span>
-                                        <p className="text-[#33281a]">{church?.map}</p>
+                                        <span className="font-medium text-[#9b8d7a]">Embedded Map:</span>
+                                        <p className="text-[#f5efe4]">{church?.map}</p>
                                     </div>
                                 </div>
 
                                 <div className="mt-4 flex justify-end space-x-2">
                                     <button
                                         onClick={() => setEditingDoc(church)}
-                                        className="text-[#8a6d1a] hover:text-[#a37408]"
+                                        className="text-[#e2b64a] hover:text-[#d9a72f]"
                                     >
                                         Edit
                                     </button>
                                     <button
                                         onClick={() => handleDelete(church.$id)}
-                                        className="text-[#7d2e3d] hover:text-[#a33b4d]"
+                                        className="text-[#e0667f] hover:text-[#ff859e]"
                                     >
                                         Delete
                                     </button>
@@ -309,8 +309,8 @@ export default function ChurchesAdmin() {
                         <svg className="mx-auto h-12 w-12 text-[#c9b98e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-[#33281a]">No churches found</h3>
-                        <p className="mt-1 text-sm text-[#7c6f5a]">
+                        <h3 className="mt-2 text-sm font-medium text-[#f5efe4]">No churches found</h3>
+                        <p className="mt-1 text-sm text-[#c3b6a4]">
                             Try adjusting your search to find what you&apos;re looking for.
                         </p>
                     </div>
@@ -318,8 +318,8 @@ export default function ChurchesAdmin() {
 
                 {/* Pagination */}
                 <div className="mt-6 flex items-center justify-between">
-                    <div className="text-sm text-[#7c6f5a]">
-                        Showing <span className="font-medium text-[#33281a]">{filteredchurches.length}</span> of <span className="font-medium text-[#33281a]">{churches.length}</span> churches
+                    <div className="text-sm text-[#c3b6a4]">
+                        Showing <span className="font-medium text-[#f5efe4]">{filteredchurches.length}</span> of <span className="font-medium text-[#f5efe4]">{churches.length}</span> churches
                     </div>
                 </div>
             </div>

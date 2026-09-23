@@ -27,18 +27,18 @@ export default function NavBarAuth() {
     ];
 
     const linkClass =
-        "text-[#4a3f2c] hover:text-[#b8860b] transition-colors";
+        "text-cream/75 hover:text-gold transition-colors";
 
     return (
         <>
-            <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#e8dfca] bg-white/85 backdrop-blur-md shadow-sm">
+            <nav className="glass-nav fixed top-0 left-0 right-0 z-50 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.6)]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         {/* Logo */}
                         <div className="flex flex-shrink-0 items-center gap-2">
-                            <LayoutDashboard size={20} className="text-[#b8860b]" />
-                            <h1 className="text-xl font-serif font-semibold text-[#33281a]">
-                                GOM <span className="text-[#b8860b]">Admin</span>
+                            <LayoutDashboard size={20} className="text-gold" />
+                            <h1 className="text-xl font-serif font-semibold text-cream">
+                                GOM <span className="text-gold">Admin</span>
                             </h1>
                         </div>
 
@@ -54,7 +54,7 @@ export default function NavBarAuth() {
                         {/* CTA Button */}
                         <button
                             onClick={handleLogout}
-                            className="hidden sm:block px-6 py-2 rounded-full bg-gradient-to-r from-[#b8860b] to-[#c9a227] text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+                            className="btn-gold hidden sm:block px-6 py-2 text-sm shadow-[0_14px_30px_-10px_rgba(184,134,11,0.6)]"
                         >
                             Logout
                         </button>
@@ -63,7 +63,7 @@ export default function NavBarAuth() {
                         <div className="md:hidden">
                             <button
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                className="text-[#4a3f2c] hover:text-[#b8860b]"
+                                className="text-cream hover:text-gold"
                             >
                                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                             </button>
@@ -73,21 +73,21 @@ export default function NavBarAuth() {
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="md:hidden border-t border-[#e8dfca] bg-white/95">
+                    <div className="glass-nav md:hidden border-t border-white/10">
                         <div className="px-4 pt-2 pb-4 space-y-1">
                             {links.map((link) => (
                                 <a
                                     key={link.href}
                                     href={link.href}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="block px-3 py-2 rounded-lg text-[#4a3f2c] hover:bg-[#f4ecdf]"
+                                    className="block px-3 py-2 rounded-lg text-cream/75 hover:text-gold hover:bg-white/[0.06]"
                                 >
                                     {link.label}
                                 </a>
                             ))}
                             <button
                                 onClick={handleLogout}
-                                className="w-full mt-2 px-6 py-2 rounded-full bg-gradient-to-r from-[#b8860b] to-[#c9a227] text-white font-medium"
+                                className="btn-gold w-full mt-2 px-6 py-2 text-sm"
                             >
                                 Logout
                             </button>

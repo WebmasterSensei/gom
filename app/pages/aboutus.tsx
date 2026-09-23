@@ -71,7 +71,7 @@ export default function AboutUs() {
   );
 
   return (
-    <section id="aboutus" ref={root} className="overflow-hidden bg-cream py-24 sm:py-32">
+    <section id="aboutus" ref={root} className="overflow-hidden bg-transparent py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-14 lg:grid-cols-2">
           {/* Image */}
@@ -87,10 +87,10 @@ export default function AboutUs() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent"></div>
             </div>
-            <div className="about-img-frame absolute -bottom-5 -left-5 -z-10 h-40 w-40 rounded-2xl border-2 border-gold/40"></div>
-            <div className="about-badge absolute -right-4 top-8 rounded-2xl border border-sand bg-white/95 px-5 py-4 text-center shadow-xl backdrop-blur">
-              <p className="font-serif text-3xl font-semibold text-gold-deep">Great</p>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-warm">
+            <div className="about-img-frame absolute -bottom-5 -left-5 -z-10 h-40 w-40 rounded-2xl border-2 border-gold/40 bg-white/[0.04] backdrop-blur-md"></div>
+            <div className="about-badge glass-chip absolute -right-4 top-8 rounded-2xl px-5 py-4 text-center shadow-[0_20px_40px_-16px_rgba(0,0,0,0.6)]">
+              <p className="font-serif text-3xl font-semibold text-gold">Great</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cream/60">
                 Commission · Matt 28:19
               </p>
             </div>
@@ -104,13 +104,13 @@ export default function AboutUs() {
               title="A House of Prayer for All Nations"
               className="mx-0 max-w-none"
             />
-            <p className="mt-6 text-base leading-relaxed text-ink-soft sm:text-lg">
+            <p className="mt-6 text-base leading-relaxed text-cream/85 sm:text-lg">
               At God&apos;s Oracle Ministries, we gather to lift the name of
               Jesus, to disciple believers, and to reach our community with the
               transforming love of Christ. Our doors are open to everyone —
               the searching, the broken, and the rejoicing.
             </p>
-            <p className="mt-4 text-base leading-relaxed text-muted-warm">
+            <p className="mt-4 text-base leading-relaxed text-cream/60">
               Through heartfelt worship, teaching from the Word, and service to
               the world around us, we walk hand in hand toward greater faith
               and deeper fellowship.
@@ -118,20 +118,20 @@ export default function AboutUs() {
 
             {/* Pillars */}
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="flex items-start gap-3 rounded-xl border border-sand bg-white p-4">
-                <BookOpen className="mt-0.5 shrink-0 text-gold-deep" size={22} />
+              <div className="glass flex items-start gap-3 p-4">
+                <BookOpen className="mt-0.5 shrink-0 text-gold" size={22} />
                 <div>
-                  <h3 className="font-semibold text-ink">The Word</h3>
-                  <p className="text-sm text-muted-warm">
+                  <h3 className="font-semibold text-cream">The Word</h3>
+                  <p className="text-sm text-cream/60">
                     Grounded in Scripture, taught without compromise.
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-3 rounded-xl border border-sand bg-white p-4">
-                <Users className="mt-0.5 shrink-0 text-gold-deep" size={22} />
+              <div className="glass flex items-start gap-3 p-4">
+                <Users className="mt-0.5 shrink-0 text-gold" size={22} />
                 <div>
-                  <h3 className="font-semibold text-ink">Fellowship</h3>
-                  <p className="text-sm text-muted-warm">
+                  <h3 className="font-semibold text-cream">Fellowship</h3>
+                  <p className="text-sm text-cream/60">
                     A family where no one walks alone.
                   </p>
                 </div>
@@ -141,7 +141,7 @@ export default function AboutUs() {
             <div className="mt-6 flex flex-wrap gap-4">
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-gold-deep to-gold px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-gold/30 transition hover:scale-105"
+                className="btn-gold inline-flex px-6 py-3 text-sm shadow-[0_18px_36px_-14px_rgba(184,134,11,0.7)]"
               >
                 <HeartHandshake size={17} />
                 Join Our Family
@@ -155,16 +155,16 @@ export default function AboutUs() {
           {stats.map((s) => (
             <div
               key={s.label}
-              className="rounded-2xl border border-sand bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              className="glass-panel p-6 text-center transition hover:-translate-y-1 hover:shadow-[0_34px_70px_-24px_rgba(0,0,0,0.65)]"
             >
               <p
-                className="stat-num font-serif text-4xl font-semibold text-gold-deep sm:text-5xl"
+                className="stat-num font-serif text-4xl font-semibold text-gold sm:text-5xl"
                 data-target={s.target}
                 data-suffix={s.suffix}
               >
                 0{s.suffix}
               </p>
-              <p className="mt-2 text-sm font-medium text-ink-soft">{s.label}</p>
+              <p className="mt-2 text-sm font-medium text-cream/75">{s.label}</p>
             </div>
           ))}
         </div>

@@ -69,11 +69,11 @@ export default function SectionHeading({
       )}
     >
       {overline && (
-        <p className="sh-over mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-gold-deep">
+        <p className="sh-over mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-gold">
           {overline}
         </p>
       )}
-      <h2 className="sh-title font-serif text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+      <h2 className="sh-title font-serif text-4xl font-semibold leading-tight text-cream sm:text-5xl">
         {title}
       </h2>
       <div
@@ -83,7 +83,7 @@ export default function SectionHeading({
         )}
       ></div>
       {subtitle && (
-        <p className="sh-sub mt-4 text-base leading-relaxed text-muted-warm sm:text-lg">
+        <p className="sh-sub mt-4 text-base leading-relaxed text-cream/60 sm:text-lg">
           {subtitle}
         </p>
       )}

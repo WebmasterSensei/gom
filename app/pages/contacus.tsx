@@ -67,10 +67,10 @@ export default function ContactUs() {
   };
 
   const inputClass =
-    "w-full rounded-xl border border-sand bg-white px-4 py-3 text-sm text-ink placeholder:text-muted-warm/60 outline-none transition focus:border-gold focus:ring-1 focus:ring-gold";
+    "input-glass";
 
   return (
-    <section id="contact" ref={root} className="bg-cream py-24 sm:py-32">
+    <section id="contact" ref={root} className="bg-transparent py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           overline="Reach Out"
@@ -81,42 +81,42 @@ export default function ContactUs() {
         <div className="mt-14 grid gap-8 lg:grid-cols-5">
           {/* Info */}
           <div className="contact-card space-y-5 lg:col-span-2">
-            <div className="rounded-2xl border border-sand bg-white p-6">
+            <div className="glass-panel p-6">
               <div className="flex items-center gap-4">
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-gold-deep to-gold text-white shadow-md">
                   <ChurchIcon size={20} />
                 </span>
                 <div>
-                  <h3 className="font-serif text-xl font-semibold text-ink">
+                  <h3 className="font-serif text-xl font-semibold text-cream">
                     God&apos;s Oracle Ministries
                   </h3>
-                  <p className="text-xs text-muted-warm">Office &amp; Sanctuary</p>
+                  <p className="text-xs text-cream/60">Office &amp; Sanctuary</p>
                 </div>
               </div>
               <div className="mt-6 space-y-4 text-sm">
-                <p className="flex items-start gap-3 text-ink-soft">
-                  <MapPin size={17} className="mt-0.5 shrink-0 text-gold-deep" />
+                <p className="flex items-start gap-3 text-cream/80">
+                  <MapPin size={17} className="mt-0.5 shrink-0 text-gold" />
                   Worship in the heart of our community — reach us for service
                   times and directions.
                 </p>
                 <a
                   href="mailto:godoracleministries@gmail.com"
-                  className="flex items-center gap-3 text-ink-soft transition hover:text-gold-deep"
+                  className="flex items-center gap-3 text-cream/80 transition hover:text-gold"
                 >
-                  <Mail size={17} className="shrink-0 text-gold-deep" />
+                  <Mail size={17} className="shrink-0 text-gold" />
                   godoracleministries@gmail.com
                 </a>
                 <a
                   href="tel:+2348012345678"
-                  className="flex items-center gap-3 text-ink-soft transition hover:text-gold-deep"
+                  className="flex items-center gap-3 text-cream/80 transition hover:text-gold"
                 >
-                  <Phone size={17} className="shrink-0 text-gold-deep" />
+                  <Phone size={17} className="shrink-0 text-gold" />
                   +234 801 234 5678
                 </a>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-gold/30 bg-gradient-to-br from-[#3f3120] to-[#2a2115] p-6 text-cream">
+            <div className="glass-panel border-gold/30 p-6 text-cream">
               <p className="font-serif text-2xl font-medium italic leading-snug">
                 “Come to me, all you who are weary and burdened, and I will give
                 you rest.”
@@ -130,23 +130,23 @@ export default function ContactUs() {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="contact-card rounded-2xl border border-sand bg-white p-6 shadow-sm sm:p-8 lg:col-span-3"
+            className="contact-card glass-panel p-6 sm:p-8 lg:col-span-3"
           >
             {status === "done" && (
-              <div className="mb-6 flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+              <div className="mb-6 flex items-center gap-3 rounded-xl border border-emerald-300/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
                 <CheckCircle2 size={18} className="shrink-0" />
                 Thank you! Your message has been received — we&apos;ll be in touch.
               </div>
             )}
             {status === "error" && (
-              <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="mb-6 rounded-xl border border-red-300/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                 Sorry, something went wrong. Please try again.
               </div>
             )}
 
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm font-medium text-ink-soft">
+                <label className="mb-2 block text-sm font-medium text-cream/85">
                   Full Name
                 </label>
                 <input
@@ -160,7 +160,7 @@ export default function ContactUs() {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-ink-soft">
+                <label className="mb-2 block text-sm font-medium text-cream/85">
                   Email Address
                 </label>
                 <input
@@ -174,7 +174,7 @@ export default function ContactUs() {
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="mb-2 block text-sm font-medium text-ink-soft">
+                <label className="mb-2 block text-sm font-medium text-cream/85">
                   Phone (optional)
                 </label>
                 <input
@@ -187,7 +187,7 @@ export default function ContactUs() {
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="mb-2 block text-sm font-medium text-ink-soft">
+                <label className="mb-2 block text-sm font-medium text-cream/85">
                   Message
                 </label>
                 <textarea
@@ -205,7 +205,7 @@ export default function ContactUs() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-deep to-gold px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-gold/30 transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+              className="btn-gold mt-6 w-full px-8 py-3.5 text-sm shadow-[0_20px_40px_-14px_rgba(184,134,11,0.7)] disabled:cursor-not-allowed"
             >
               <Send size={16} />
               {status === "sending" ? "Sending…" : "Send Message"}

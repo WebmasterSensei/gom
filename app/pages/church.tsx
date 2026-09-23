@@ -56,7 +56,7 @@ export default function Churches() {
   );
 
   return (
-    <section id="churches" ref={root} className="bg-cream-dark/60 py-24 sm:py-32">
+    <section id="churches" ref={root} className="bg-transparent py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           overline="Where We Worship"
@@ -65,9 +65,9 @@ export default function Churches() {
         />
 
         {loading ? (
-          <p className="mt-14 text-center text-sm text-muted-warm">Loading churches…</p>
+          <p className="mt-14 text-center text-sm text-cream/60">Loading churches…</p>
         ) : churches.length === 0 ? (
-          <p className="mt-14 text-center text-sm text-muted-warm">
+          <p className="mt-14 text-center text-sm text-cream/60">
             Church locations are being added soon.
           </p>
         ) : (
@@ -75,29 +75,29 @@ export default function Churches() {
             {churches.map((church) => (
               <article
                 key={church.$id}
-                className="church-card overflow-hidden rounded-2xl border border-sand bg-white shadow-sm transition hover:-translate-y-1.5 hover:shadow-xl"
+                className="church-card glass-panel overflow-hidden transition hover:-translate-y-1.5 hover:shadow-[0_36px_80px_-28px_rgba(0,0,0,0.7)]"
               >
-                <div className="flex items-center gap-4 border-b border-sand bg-gradient-to-r from-gold/10 to-transparent px-6 py-5">
+                <div className="flex items-center gap-4 border-b border-white/10 bg-gradient-to-r from-gold/15 to-transparent px-6 py-5">
                   <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-deep to-gold text-white shadow-md">
                     <ChurchIcon size={20} />
                     <span className="absolute -inset-1 -z-10 rounded-full bg-gold/25 blur-sm"></span>
                   </span>
                   <div>
-                    <h3 className="font-serif text-2xl font-semibold text-ink">
+                    <h3 className="font-serif text-2xl font-semibold text-cream">
                       {church.name}
                     </h3>
-                    <p className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-muted-warm">
-                      <MapPin size={12} className="text-gold-deep" />
+                    <p className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-cream/60">
+                      <MapPin size={12} className="text-gold" />
                       {church.address}
                     </p>
                   </div>
                 </div>
 
                 <div className="p-6">
-                  <p className="text-sm leading-relaxed text-muted-warm">{church.desc}</p>
+                  <p className="text-sm leading-relaxed text-cream/60">{church.desc}</p>
 
                   {church.map ? (
-                    <div className="mt-5 overflow-hidden rounded-xl border border-sand">
+                    <div className="mt-5 overflow-hidden rounded-xl border border-white/10">
                       <iframe
                         src={church.map}
                         title={`Map - ${church.name}`}
@@ -109,8 +109,8 @@ export default function Churches() {
                       ></iframe>
                     </div>
                   ) : (
-                    <div className="mt-5 flex h-32 items-center justify-center rounded-xl border border-dashed border-gold/40 bg-cream">
-                      <span className="inline-flex items-center gap-2 text-sm text-muted-warm">
+                    <div className="mt-5 flex h-32 items-center justify-center rounded-xl border border-dashed border-gold/40 bg-white/[0.05]">
+                      <span className="inline-flex items-center gap-2 text-sm text-cream/60">
                         <ExternalLink size={16} /> Map coming soon
                       </span>
                     </div>
