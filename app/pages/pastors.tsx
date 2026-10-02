@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { appwriteConfig } from "@/lib/appwrite";
 import SectionHeading from "./partials/section-heading";
+import Image from "next/image";
 
 interface PastorDoc {
   $id: string;
@@ -81,10 +82,14 @@ export default function Pastors() {
                 >
                   <div className="relative mx-auto mt-8 h-36 w-36 overflow-hidden rounded-full border-4 border-gold/30 shadow-lg transition group-hover:border-gold/70">
                     {img ? (
-                      <img
+                      <Image
                         src={img}
                         alt={pastor.name || "Pastor"}
-                        className="h-full w-full object-cover"
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        loading="lazy"
+                        decoding="async"
+                        className="object-cover"
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gold/25 to-burgundy/20 font-serif text-4xl font-semibold text-gold">

@@ -4,6 +4,7 @@ import { Databases, Query } from 'appwrite';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { appwriteConfig } from '@/lib/appwrite';
 import AddPastorsForm from './add-pastors';
+import Image from 'next/image';
 
 type PastorStatus = 'Active' | 'Inactive' | 'Pending';
 
@@ -232,9 +233,9 @@ export default function PastorAdmin() {
                                     <tr key={pastor.$id} className="hover:bg-[rgba(255,255,255,0.04)] transition">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
-                                                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[rgba(255,255,255,0.07)] overflow-hidden flex items-center justify-center">
+                                                <div className="relative flex-shrink-0 h-10 w-10 rounded-full bg-[rgba(255,255,255,0.07)] overflow-hidden flex items-center justify-center">
                                                     {pastor?.image ? (
-                                                        <img className='h-full w-full object-cover' src={pastor.image} alt="" />
+                                                        <Image fill sizes="40px" className='object-cover' src={pastor.image} alt={pastor.name || "Pastor"} />
                                                     ) : (
                                                         <span className="text-[#b8860b] text-sm font-bold">{pastor?.name?.charAt(0) || "P"}</span>
                                                     )}
@@ -281,9 +282,9 @@ export default function PastorAdmin() {
                             <div key={pastor.$id} className="border-b border-[rgba(255,255,255,0.06)] p-4 hover:bg-[rgba(255,255,255,0.04)]">
                                 <div className="flex items-start justify-between mb-3">
                                     <div className="flex items-center">
-                                        <div className="flex-shrink-0 h-12 w-12 rounded-full bg-[rgba(255,255,255,0.07)] overflow-hidden flex items-center justify-center">
+                                        <div className="relative flex-shrink-0 h-12 w-12 rounded-full bg-[rgba(255,255,255,0.07)] overflow-hidden flex items-center justify-center">
                                             {pastor?.image ? (
-                                                <img className='h-full w-full object-cover' src={pastor.image} alt="" />
+                                                <Image fill sizes="48px" className='object-cover' src={pastor.image} alt={pastor.name || "Pastor"} />
                                             ) : (
                                                 <span className="text-[#b8860b] text-sm font-bold">{pastor?.name?.charAt(0) || "P"}</span>
                                             )}

@@ -108,10 +108,10 @@ export default function Hero() {
           <AnimatePresence initial={false}>
             <motion.div
               key={slides[index].src}
-              initial={{ opacity: 0, scale: 1.08 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ opacity: { duration: 1.2, ease: "easeInOut" }, scale: { duration: 6, ease: "linear" } }}
+              transition={{ opacity: { duration: 1.4, ease: "easeInOut" } }}
               className="absolute inset-0"
             >
               <Image
@@ -127,7 +127,7 @@ export default function Hero() {
         </div>
 
         {/* Readability overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/45 to-ink/75"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/65 via-ink/40 to-ink/70"></div>
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/40 to-transparent"></div>
       </div>
 
@@ -175,9 +175,10 @@ export default function Hero() {
               alt="God's Oracle Ministries"
               width={120}
               height={120}
-              className="relative rounded-full border-2 border-gold/60 bg-white object-cover shadow-xl"
-              priority
-            />
+            className="relative rounded-full border-2 border-gold/60 bg-white object-cover shadow-xl"
+            priority
+            sizes="120px"
+          />
           </div>
         </div>
 

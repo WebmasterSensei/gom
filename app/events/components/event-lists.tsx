@@ -4,6 +4,7 @@ import { Databases, Query } from 'appwrite';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { appwriteConfig } from '@/lib/appwrite';
 import AddEventComponent from './add-events';
+import Image from 'next/image';
 
 type EventStatus = 'Active' | 'Inactive' | 'Pending';
 
@@ -231,9 +232,9 @@ export default function EventAdmin() {
                                     <tr key={event.$id} className="hover:bg-[rgba(255,255,255,0.04)] transition">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
-                                                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[rgba(255,255,255,0.07)] flex items-center justify-center overflow-hidden">
+                                                <div className="relative flex-shrink-0 h-10 w-10 rounded-full bg-[rgba(255,255,255,0.07)] flex items-center justify-center overflow-hidden">
                                                     {event?.image ? (
-                                                        <img className='h-full w-full object-cover' src={event.image} alt="" />
+                                                        <Image fill sizes="40px" className='object-cover' src={event.image} alt={event.title || "Event"} />
                                                     ) : (
                                                         <span className="text-[#b8860b] text-sm font-bold">{event?.title?.charAt(0) || "E"}</span>
                                                     )}
@@ -280,9 +281,9 @@ export default function EventAdmin() {
                             <div key={event.$id} className="border-b border-[rgba(255,255,255,0.06)] p-4 hover:bg-[rgba(255,255,255,0.04)]">
                                 <div className="flex items-start justify-between mb-3">
                                     <div className="flex items-center">
-                                        <div className="flex-shrink-0 h-12 w-12 rounded-full bg-[rgba(255,255,255,0.07)] overflow-hidden flex items-center justify-center">
+                                        <div className="relative flex-shrink-0 h-12 w-12 rounded-full bg-[rgba(255,255,255,0.07)] overflow-hidden flex items-center justify-center">
                                             {event?.image ? (
-                                                <img className='h-full w-full object-cover' src={event.image} alt="" />
+                                                <Image fill sizes="48px" className='object-cover' src={event.image} alt={event.title || "Event"} />
                                             ) : (
                                                 <span className="text-[#b8860b] text-sm font-bold">{event?.title?.charAt(0) || "E"}</span>
                                             )}

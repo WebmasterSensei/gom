@@ -102,9 +102,14 @@ body {
   filter: blur(72px);
   mix-blend-mode: screen;
   animation:
-    blob-drift 22s ease-in-out infinite,
-    blob-morph 18s ease-in-out infinite;
+    blob-drift 28s ease-in-out infinite,
+    blob-morph 24s ease-in-out infinite;
   will-change: transform, border-radius;
+  transform: translate3d(0, 0, 0);
+  contain: paint;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
 }
 
 @keyframes blob-drift {
@@ -113,10 +118,10 @@ body {
     transform: translate3d(0, 0, 0) scale(1);
   }
   33% {
-    transform: translate3d(7vw, -5vh, 0) scale(1.18);
+    transform: translate3d(6vw, -4vh, 0) scale(1.12);
   }
   66% {
-    transform: translate3d(-5vw, 6vh, 0) scale(0.9);
+    transform: translate3d(-4vw, 5vh, 0) scale(0.96);
   }
 }
 
@@ -151,18 +156,26 @@ body {
   background: conic-gradient(
     from 110deg at 50% -10%,
     transparent 0deg,
-    rgba(255, 255, 255, 0.07) 60deg,
+    rgba(255, 255, 255, 0.06) 60deg,
     transparent 140deg,
-    rgba(255, 255, 255, 0.04) 240deg,
+    rgba(255, 255, 255, 0.03) 240deg,
     transparent 320deg
   );
-  animation: sheen-sweep 14s ease-in-out infinite;
+  animation: sheen-sweep 20s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  contain: paint;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  opacity: 0.03;
+  will-change: opacity;
+  transform: translate3d(0, 0, 0);
+  contain: paint;
 }
 
 /* ------------------------------------------------------------------ */
@@ -175,16 +188,19 @@ body {
   border-radius: 1rem;
   background: linear-gradient(
     150deg,
-    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.12) 0%,
     rgba(255, 255, 255, 0.04) 45%,
     rgba(255, 255, 255, 0.08) 100%
   );
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
     0 20px 44px -18px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .glass::before {
@@ -205,21 +221,20 @@ body {
   border-radius: 2rem;
   background: linear-gradient(
     150deg,
-    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.13) 0%,
     rgba(255, 255, 255, 0.05) 45%,
-    rgba(255, 255, 255, 0.09) 100%
+    rgba(255, 255, 255, 0.08) 100%
   );
   box-shadow:
-    rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
-    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
-    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
-    rgba(0, 0, 0, 0.06) 0px 2px 1px,
-    rgba(0, 0, 0, 0.09) 0px 4px 2px,
-    rgba(0, 0, 0, 0.09) 0px 8px 4px,
-    rgba(0, 0, 0, 0.09) 0px 16px 8px,
-    rgba(0, 0, 0, 0.09) 0px 32px 16px;
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+    0 28px 60px -24px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(20px) saturate(145%);
+  -webkit-backdrop-filter: blur(20px) saturate(145%);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .glass-panel::before {
@@ -240,14 +255,17 @@ body {
   border-radius: 9999px;
   background: linear-gradient(
     150deg,
-    rgba(255, 255, 255, 0.13),
+    rgba(255, 255, 255, 0.12),
     rgba(255, 255, 255, 0.04)
   );
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
     0 10px 26px -12px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .glass-nav {
@@ -255,11 +273,14 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   background: linear-gradient(
     180deg,
-    rgba(24, 18, 34, 0.72),
-    rgba(24, 18, 34, 0.45)
+    rgba(24, 18, 34, 0.68),
+    rgba(24, 18, 34, 0.42)
   );
-  backdrop-filter: blur(22px) saturate(150%);
-  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(148%);
+  -webkit-backdrop-filter: blur(18px) saturate(148%);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .glass-nav::before {
@@ -334,6 +355,36 @@ body {
 
 .text-gold-glow {
   text-shadow: 0 0 26px rgba(217, 167, 47, 0.45);
+}
+
+/* Reduced motion & mobile performance tweaks */
+@media (prefers-reduced-motion: reduce) {
+  .liquid-blob,
+  .liquid-sheen,
+  .grain {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .liquid-blob {
+    filter: blur(40px);
+  }
+  .glass-panel,
+  .glass {
+    backdrop-filter: blur(16px) saturate(142%);
+    -webkit-backdrop-filter: blur(16px) saturate(142%);
+  }
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass,
+  .glass-panel,
+  .glass-chip,
+  .glass-nav {
+    background: rgba(24, 18, 34, 0.92);
+  }
 }
 
 :root {

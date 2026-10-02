@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { appwriteConfig } from "@/lib/appwrite";
 import SectionHeading from "./partials/section-heading";
+import Image from "next/image";
 
 interface EventDoc {
   $id: string;
@@ -109,10 +110,14 @@ export default function Events() {
                 >
                   <div className="relative h-48 overflow-hidden">
                     {img ? (
-                      <img
+                      <Image
                         src={img}
                         alt={event.title || "Event"}
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        loading="lazy"
+                        decoding="async"
+                        className="object-cover transition duration-500 will-change-transform group-hover:scale-[1.02]"
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gold/25 to-burgundy/20">

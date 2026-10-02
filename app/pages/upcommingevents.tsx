@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { appwriteConfig } from "@/lib/appwrite";
 import SectionHeading from "./partials/section-heading";
+import Image from "next/image";
 
 interface EventDoc {
   $id: string;
@@ -108,10 +109,14 @@ export default function UpComingEvents() {
             <div className="up-spotlight mt-14 grid items-center overflow-hidden rounded-3xl glass-panel lg:grid-cols-2">
               <div className="relative h-64 lg:h-auto">
                 {next.image ? (
-                  <img
+                  <Image
                     src={next.image}
                     alt={next.title || "Upcoming event"}
-                    className="h-full w-full object-cover"
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    loading="lazy"
+                    decoding="async"
+                    className="object-cover"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gold/30 to-burgundy/30">
